@@ -42,35 +42,27 @@ export default function Slides() {
             buttonLabel: "EU QUERO AGORA" 
         }
     ];
-    
 
     const [currentSlide, setCurrentSlide] = useState(0); // Track the current slide index
-    const [isTransitioning, setIsTransitioning] = useState(false); // For transition effect
 
     // Function to go to the next slide
     const nextSlide = () => {
-        setIsTransitioning(true);
         setTimeout(() => {
             setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-            setIsTransitioning(false);
         }, 300); // Transition duration in ms
     };
 
     // Function to go to the previous slide
     const prevSlide = () => {
-        setIsTransitioning(true);
         setTimeout(() => {
             setCurrentSlide((prevSlide) => (prevSlide === 0 ? slides.length - 1 : prevSlide - 1));
-            setIsTransitioning(false);
         }, 300);
     };
 
     // Function to directly jump to a slide when a dot is clicked
     const goToSlide = (index: number) => {
-        setIsTransitioning(true);
         setTimeout(() => {
             setCurrentSlide(index);
-            setIsTransitioning(false);
         }, 300);
     };
 
