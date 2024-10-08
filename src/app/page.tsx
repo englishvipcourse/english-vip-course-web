@@ -15,8 +15,6 @@ export default function Home() {
         <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
           <li className="mb-2">
             Get started by editing{" "}
-            
-            .
           </li>
           <li>Save and see your changes instantly.</li>
         </ol>
