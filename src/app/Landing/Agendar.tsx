@@ -99,7 +99,7 @@ export default function Agendar() {
   return (
     <div>
       <Toaster /> {/* Adicione o Toaster aqui */}
-      <div className="w-full sm:gap-36 gap-4 flex sm:flex-row flex-col items-center justify-between p-12 py-20 px-20 mt-20 bg-blue-900 text-white">
+      <div id="contato" className="w-full sm:gap-36 gap-4 flex sm:flex-row flex-col items-center justify-between p-12 py-20 px-20 mt-20 bg-blue-900 text-white">
         <div className="flex flex-col items-start">
           <p className="sm:text-6xl text-4xl font-semibold">
             Agende sua aula <span className="bg-red-600">experimental</span>
@@ -147,7 +147,7 @@ export default function Agendar() {
         </div>
       </div>
 
-      <div className="text-[#505050] flex flex-col items-center p-10">
+      <div id="perguntas" className="text-[#505050] flex flex-col items-center p-10">
         <div className="flex flex-col items-start">
           <p className="text-5xl font-semibold text-center">
             Perguntas <span className="text-gradient">frequentes</span>

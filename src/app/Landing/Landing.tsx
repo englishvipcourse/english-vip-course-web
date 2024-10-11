@@ -15,7 +15,7 @@ import Image from 'next/image';
 
 export default function Landing() {
     const openWhatsApp = () => {
-        const phoneNumber = "5511999999999"; // Replace with your phone number
+        const phoneNumber = "5582993246655"; // Replace with your phone number
         window.open(`https://wa.me/${phoneNumber}`, '_blank'); // Open WhatsApp chat in a new tab
     };
 

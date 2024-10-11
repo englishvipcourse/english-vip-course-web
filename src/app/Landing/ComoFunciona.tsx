@@ -1,40 +1,40 @@
 import Image from "next/image"
 
-import aula1 from '../../../images/funciona/aula-experimental.png'
-import aula2 from '../../../images/funciona/aula-experimental1.png'
-import aula3 from '../../../images/funciona/aula-experimental2.png'
+import aula1 from '../../../images/funciona/aula-experimental.jpg'
+import aula2 from '../../../images/funciona/aula-experimental1.jpg'
+import aula3 from '../../../images/funciona/aula-experimental2.jpg'
 
 export default function ComoFunciona(){
     return(
-            <div className="bg-blue-50 text-[#505050] flex flex-col items-center h-full">
+            <div id="quem-somos" className="bg-blue-50 text-[#505050] flex flex-col items-center h-full">
                 <div className="flex flex-col items-center font-bold sm:text-6xl text-4xl w-full p-20">
                     <span>Como funciona</span>
                     <span className="text-gradient">a English Vip Course</span>
                 </div>
 
-                <div className="w-full flex flex-wrap justify-center gap-8 p-4">
-                    <div className="sm:w-[30%] w-full flex flex-col items-start gap-2">
-                        <p className="text-5xl font-bold text-blue-600">1</p>
+                <div className="w-full flex flex-wrap justify-around p-4">
+                    <div className="sm:w-[25%] w-full h-[50%] flex flex-col items-start gap-2">
+                        <p className="text-5xl font-bold text-gradient">1</p>
                         <p className="text-2xl font-bold">Agende uma</p>
-                        <p className="-mt-2 text-2xl font-bold text-blue-600">Aula Experimental</p>
-                        <Image src={aula1} alt={""} className="h-full w-full" />
-                        <span className="text-justify">Dê o primeiro passo rumo à fluência. Não importa se você está começando do zero ou já possui algum conhecimento. Nossa equipe está pronta para atender você!</span>
+                        <p className="-mt-2 text-2xl font-bold text-gradient">Aula Experimental</p>
+                        <Image src={aula1} alt={""} className="h-full w-full rounded-3xl" />
+                        <span className="text-justify mt-3">Dê o primeiro passo rumo à fluência. Não importa se você está começando do zero ou já possui algum conhecimento. Nossa equipe está pronta para atender você!</span>
                     </div>
 
-                    <div className="sm:w-[30%] w-full flex flex-col items-start gap-2">
-                        <p className="text-5xl font-bold text-blue-600">2</p>
+                    <div className="sm:w-[25%] w-full flex h-[50%] flex-col items-start gap-2">
+                        <p className="text-5xl font-bold text-gradient">2</p>
                         <p className="text-2xl font-bold">Personalize seu</p>
-                        <p className="-mt-2 text-2xl font-bold text-blue-600">Plano de Estudos</p>
-                        <Image src={aula2} alt={""} className="h-full w-full"/>
-                        <span className="text-justify">Conte-nos seus objetivos e personalizaremos todas as suas aulas. Flexibilidade total: Escolha os melhores dias e horários que se encaixem na sua rotina. Adaptamos o curso às suas necessidades.</span>
+                        <p className="-mt-2 text-2xl font-bold text-gradient">Plano de Estudos</p>
+                        <Image src={aula2} alt={""} className="h-full w-full rounded-3xl"/>
+                        <span className="text-justify mt-3">Conte-nos seus objetivos e personalizaremos todas as suas aulas. Flexibilidade total: Escolha os melhores dias e horários que se encaixem na sua rotina. Adaptamos o curso às suas necessidades.</span>
                     </div>
 
-                    <div className="sm:w-[30%] w-full flex flex-col items-start gap-2">
-                        <p className="text-5xl font-bold text-blue-600">3</p>
+                    <div className="sm:w-[25%] w-full flex h-[50%] flex-col items-start gap-2">
+                        <p className="text-5xl font-bold text-gradient">3</p>
                         <p className="text-2xl font-bold">Comece suas</p>
-                        <p className="-mt-2 text-2xl font-bold text-blue-600">Aulas Imediatamente</p>
-                        <Image src={aula3} alt={""} className="h-full w-full"/>
-                        <span className="text-justify">Fale inglês desde a primeira aula: Nada de esperar! Comece a se comunicar em inglês desde o primeiro encontro. Aulas práticas e interativas garantindo que você se sinta confiante e motivado a cada passo.</span>
+                        <p className="-mt-2 text-2xl font-bold text-gradient">Aulas Imediatamente</p>
+                        <Image src={aula3} alt={""} className="h-full w-full rounded-3xl"/>
+                        <span className="text-justify mt-3">Fale inglês desde a primeira aula: Nada de esperar! Comece a se comunicar em inglês desde o primeiro encontro. Aulas práticas e interativas garantindo que você se sinta confiante e motivado a cada passo.</span>
                     </div>
                 </div>
 

@@ -40,11 +40,11 @@ export default function Landing() {
 
                 {/* Regular Menu - Hidden on mobile */}
                 <div className="hidden lg:flex flex-row gap-12 justify-between text-[#222222] text-[14.4px]">
-                    <p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Nosso Método</p>
-                    <p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Nosso Time</p>
-                    <p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Depoimentos</p>
-                    <p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Perguntas Frequentes</p>
-                    <p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Contato</p>
+                    <a href='#nosso-metodo'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Nosso Método</p></a>
+                    <a href='#nosso-time'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Nosso Time</p></a>
+                    <a href='#depoimentos'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Depoimentos</p></a>
+                    <a href='#perguntas'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Perguntas Frequentes</p></a>
+                    <a href='#contato'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Contato</p></a>
                     <a href='/login'><button className="ml-20 text-[15.5px] flex flex-row gap-1 items-center text-blue-950 font-semibold hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer"><LuDoorOpen /> Login</button></a>
                 </div>
             </div>
@@ -63,11 +63,11 @@ export default function Landing() {
                     </div>
                     <div className='flex flex-col items-center justify-between h-full p-6 mt-6 text-[#222222]'>
                         <div className='flex flex-col items-center gap-10'>
-                        <p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Nosso Método</p>
-                        <p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Nosso Time</p>
-                        <p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Depoimentos</p>
-                        <p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Perguntas Frequentes</p>
-                        <p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Contato</p>
+                        <a href='#nosso-metodo'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Nosso Método</p></a>
+                        <a href='#nosso-time'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Nosso Time</p></a>
+                        <a href='#depoimentos'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Depoimentos</p></a>
+                        <a href='#perguntas'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Perguntas Frequentes</p></a>
+                        <a href='#contato'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Contato</p></a>
                         </div>
                         <a href='/login'><button className="flex text-lg flex-row mt-20 gap-1 items-center text-blue-800 font-semibold hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer"><LuDoorOpen className='w-6 h-6' /> Login</button></a>
                     </div>

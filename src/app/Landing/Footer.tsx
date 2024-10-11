@@ -22,19 +22,19 @@ export default function Footer() {
                 <a href="#quem-somos" className="hover:text-blue-300 hover:font-semibold duration-200 ease-in-out transition-all">
                 Quem somos
                 </a>
-                <a href="#metodo" className="hover:text-blue-300 hover:font-semibold duration-200 ease-in-out transition-all">
+                <a href="#nosso-metodo" className="hover:text-blue-300 hover:font-semibold duration-200 ease-in-out transition-all">
                 Nosso método
                 </a>
             </div>
             <div className='flex flex-col items-start'>
-                <a href="#time" className="hover:text-blue-300 hover:font-semibold duration-200 ease-in-out transition-all">
+                <a href="#nosso-time" className="hover:text-blue-300 hover:font-semibold duration-200 ease-in-out transition-all">
                 Nosso Time
                 </a>
                 <a href="#depoimentos" className="hover:text-blue-300 hover:font-semibold duration-200 ease-in-out transition-all">
                 Depoimentos
                 </a>
             </div>
-            <a href="#faq" className="hover:text-blue-300 hover:font-semibold duration-200 ease-in-out transition-all">
+            <a href="#perguntas" className="hover:text-blue-300 hover:font-semibold duration-200 ease-in-out transition-all">
               Perguntas Frequentes
             </a>
           </div>

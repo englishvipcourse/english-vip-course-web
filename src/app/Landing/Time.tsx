@@ -6,7 +6,7 @@ import aula3 from '../../../images/time/flavia.jpg';
 
 export default function Time() {
     return (
-        <div className="bg-blue-50 text-[#505050] flex flex-col items-center h-full">
+        <div id="nosso-time" className="bg-blue-50 text-[#505050] flex flex-col items-center h-full">
             <div className="flex flex-col items-center font-bold sm:text-6xl text-4xl w-full p-20">
                 <span>Conheça</span>
                 <span className="text-gradient">Nosso Time</span>

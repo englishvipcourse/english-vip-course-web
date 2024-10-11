@@ -11,7 +11,7 @@ import Icon7 from '../../../images/metodo/icon-group-7.png';
 
 export default function Metodo() {
     return (
-        <div className="text-[#505050] sm:p-8">
+        <div id="nosso-metodo" className="text-[#505050] sm:p-8">
             <div className="lg:flex lg:flex-row sm:flex sm:flex-col items-center sm:p-28 sm:px-38 p-6 px-6 w-full h-full">
                 <div className="flex flex-col sm:items-start items-center font-bold sm:text-6xl text-4xl w-full">
                     <span>Personalizado,</span>

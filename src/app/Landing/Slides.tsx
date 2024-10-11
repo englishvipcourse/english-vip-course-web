@@ -81,9 +81,11 @@ export default function Slides() {
                         <div className="absolute inset-0 flex flex-col items-center justify-center text-white bg-black bg-opacity-30">
                             <div className='flex flex-col items-start w-[50%] gap-4'>
                                 <h2 className="sm:text-5xl text-3xl font-bold mb-4">{slide.text}</h2>
+                                <a href="https://api.whatsapp.com/send?phone=5582993246655">
                                 <button className="px-6 py-2 text-base text-blue-950 bg-blue-300 hover:bg-blue-700 hover:text-white rounded-3xl transition-all duration-300 ease-in-out">
                                     {slide.buttonLabel}
                                 </button>
+                                </a>
                             </div>
                         </div>
                     </div>
