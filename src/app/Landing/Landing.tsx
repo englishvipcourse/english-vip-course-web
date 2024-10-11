@@ -11,6 +11,7 @@ import ComparisonTable from './Comparacao';
 import Agendar from './Agendar';
 import Footer from './Footer';
 import MaisDepoimentos from './MaisDepoimentos';
+import Image from 'next/image';
 
 export default function Landing() {
     const openWhatsApp = () => {
@@ -37,7 +38,7 @@ export default function Landing() {
                 className="fixed bottom-4 right-4 bg-green-500 text-white rounded-full p-3 shadow-lg hover:bg-green-600 transition duration-200"
             >
                 <span className="flex items-center justify-center">
-                    <img 
+                    <Image 
                         src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
                         alt="WhatsApp" 
                         className="w-6 h-6"
