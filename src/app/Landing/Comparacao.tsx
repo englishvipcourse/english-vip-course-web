@@ -36,7 +36,7 @@ const ComparisonTable: React.FC = () => {
                                 description: "Aulas personalizadas aos interesses e objetivos dos alunos",
                                 online: true,
                                 presencial: false,
-                                particular: false,
+                                particular: true,
                                 gravado: false,
                             },
                             {
@@ -51,7 +51,7 @@ const ComparisonTable: React.FC = () => {
                                 online: true,
                                 presencial: false,
                                 particular: false,
-                                gravado: false,
+                                gravado: true,
                             },
                             {
                                 description: "Conversação desde a primeira aula",
@@ -63,14 +63,14 @@ const ComparisonTable: React.FC = () => {
                             {
                                 description: "Aulas online e ao vivo no melhor horário pro aluno",
                                 online: true,
-                                presencial: false,
-                                particular: true,
+                                presencial: true,
+                                particular: false,
                                 gravado: false,
                             },
                             {
                                 description: "Aulas interativas, engajamento constante",
                                 online: true,
-                                presencial: false,
+                                presencial: true,
                                 particular: false,
                                 gravado: false,
                             },
@@ -78,13 +78,13 @@ const ComparisonTable: React.FC = () => {
                                 description: "Feedback em tempo real e acompanhamento individualizado",
                                 online: true,
                                 presencial: false,
-                                particular: false,
+                                particular: true,
                                 gravado: false,
                             },
                             {
                                 description: "Garantia e Estrutura escolar",
                                 online: true,
-                                presencial: false,
+                                presencial: true,
                                 particular: false,
                                 gravado: false,
                             }
