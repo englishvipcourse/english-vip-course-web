@@ -42,6 +42,8 @@ export default function Landing() {
                         src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
                         alt="WhatsApp" 
                         className="w-6 h-6"
+                        width={100}
+                        height={100}
                     />
                 </span>
             </button>

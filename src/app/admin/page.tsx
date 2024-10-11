@@ -78,24 +78,27 @@ const AdminPage: React.FC = () => {
         <div className="flex flex-col items-center justify-center w-screen h-screen p-2 bg-blue-100 text-black">
             <Toaster />
             <div className="bg-white p-4 rounded-lg shadow-md w-full h-full overflow-hidden">
-                <div className='flex sm:flex-row justify-between w-full p-2 mb-6'>
-                    <Image src={Logo} alt={""} className='w-[10%] h-[10%] sm:inline hidden' />
-                    <h1 className="sm:text-3xl text-xl font-bold text-left">Painel de Administrador</h1>
-                    <button 
-                        onClick={handleLogout}
-                        className="w-20 px-3 bg-red-600 flex flex-row items-center gap-2 text-white font-semibold rounded-lg hover:bg-red-700 transition duration-200"
-                    >
-                        <TbLogout2 className='w-6 h-6' /> Sair
-                    </button>
+                <div className='flex sm:flex-row flex-col items-center justify-between w-full p-2 mb-6'>
+                <Image src={Logo} alt={""} className='w-[50%] h-[50%] pb-6 sm:hidden inline' />
+                    <div className='flex sm:flex-row justify-between w-full h-full'>
+                        <Image src={Logo} alt={""} className='w-[10%] h-[10%] sm:inline hidden' />
+                        <h1 className="sm:text-3xl text-lg font-bold text-left">Painel de Administrador</h1>
+                        <button 
+                            onClick={handleLogout}
+                            className="w-20 px-3 bg-red-600 flex flex-row items-center gap-2 text-white font-semibold rounded-lg hover:bg-red-700 transition duration-200"
+                        >
+                            <TbLogout2 className='w-6 h-6' /> Sair
+                        </button>
+                    </div>
                 </div>
-                <div className='w-max max-w-96 h-[75vh] overflow-y-auto p-2 bg-gray-200 rounded-lg flex flex-col items-center justify-start'>
+                <div className='w-full h-[75vh] overflow-y-auto p-2 bg-gray-200 rounded-lg flex flex-col items-center justify-start'>
                     <p className='font-semibold'>Agendamentos de Aula</p>
                     <div className='flex flex-col gap-1 text-sm p-2 w-full'>
                         {schedules.length === 0 ? (
                             <p>Nenhum agendamento encontrado.</p>
                         ) : (
                             schedules.map(schedule => (
-                                <div key={schedule.id} className='bg-gray-300 hover:bg-gray-400 duration-200 ease-in-out transition-all rounded-lg p-2 flex justify-between items-center border-b py-2'>
+                                <div key={schedule.id} className='bg-gray-300 hover:bg-gray-400 duration-200 ease-in-out transition-all rounded-lg p-2 flex sm:flex-row flex-col gap-2 justify-between items-center border-b py-2'>
                                     <div>
                                         <p>Nome: {schedule.name}</p>
                                         <p>Email: {schedule.email}</p>
@@ -119,7 +122,7 @@ const AdminPage: React.FC = () => {
             {/* Confirmation Modal */}
             {showModal && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white p-8 rounded-lg shadow-md">
+                    <div className="bg-white p-8 rounded-lg shadow-md m-8">
                         <h2 className="text-lg font-bold">Confirmar Exclusão</h2>
                         <p>Você tem certeza que deseja excluir este agendamento?</p>
                         <div className="flex justify-end mt-4">
