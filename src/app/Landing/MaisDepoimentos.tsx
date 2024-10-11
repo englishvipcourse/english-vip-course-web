@@ -6,10 +6,10 @@ import { IoIosArrowForward } from "react-icons/io";
 
 const MaisDepoimentos: React.FC = () => {
     const slides = [
-        (<iframe width="100%" height="100%" src="https://www.youtube.com/embed/-hZCt_EHdfI" title="🗣️ Depoimento Inspirador" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>),
-        (<iframe width="100%" height="100%" src="https://www.youtube.com/embed/XDZB4SJQxhc" title="🌟 Depoimento Inspirador" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>),
-        (<iframe width="100%" height="100%" src="https://www.youtube.com/embed/k0qA0oiedK0" title="🎬 Depoimento Inspirador" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>),
-        (<iframe width="100%" height="100%" src="https://www.youtube.com/embed/iBqdjNhCbsc" title="🎓 Depoimento Inspirador" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>)
+        (<iframe key="slide1" width="100%" height="100%" src="https://www.youtube.com/embed/-hZCt_EHdfI" title="🗣️ Depoimento Inspirador" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>),
+        (<iframe key="slide2" width="100%" height="100%" src="https://www.youtube.com/embed/XDZB4SJQxhc" title="🌟 Depoimento Inspirador" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>),
+        (<iframe key="slide3" width="100%" height="100%" src="https://www.youtube.com/embed/k0qA0oiedK0" title="🎬 Depoimento Inspirador" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>),
+        (<iframe key="slide4" width="100%" height="100%" src="https://www.youtube.com/embed/iBqdjNhCbsc" title="🎓 Depoimento Inspirador" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>)
     ];
 
     const [currentSlide, setCurrentSlide] = useState(0);
