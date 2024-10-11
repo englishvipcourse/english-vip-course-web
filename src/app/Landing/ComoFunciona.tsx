@@ -9,7 +9,7 @@ export default function ComoFunciona(){
             <div className="bg-blue-50 text-[#505050] flex flex-col items-center h-full">
                 <div className="flex flex-col items-center font-bold sm:text-6xl text-4xl w-full p-20">
                     <span>Como funciona</span>
-                    <span className="text-blue-600">a English Vip Course</span>
+                    <span className="text-gradient">a English Vip Course</span>
                 </div>
 
                 <div className="w-full flex flex-wrap justify-center gap-8 p-4">
@@ -38,12 +38,12 @@ export default function ComoFunciona(){
                     </div>
                 </div>
 
-                <div className="sm:flex sm:flex-row flex flex-col items-center justify-around w-screen bg-blue-900 h-fit px-8 py-20 mt-20">
+                <div className="sm:flex sm:flex-row flex flex-col items-center justify-around w-screen bg-blue-900 h-fit px-8 py-20 mt-20 gap-4">
                     <div>
                         <p className="text-white font-bold text-left text-3xl">Agende agora uma aula gratuita <br/> <span className="bg-red-700">ou tire qualquer dúvida</span></p>
                     </div>
                     <div>
-                        <button className="bg-white hover:bg-blue-50 transition-all ease-in-out duration-300 font-bold text-blue-900 rounded-full text-md py-6 px-28 tracking-widest">ENTRE EM CONTATO</button>
+                        <a href="https://api.whatsapp.com/send?phone=5582993246655"><button className="bg-white hover:bg-blue-50 transition-all ease-in-out duration-300 font-bold text-blue-900 rounded-full text-md sm:py-6 sm:px-28 py-4 px-12 tracking-widest">ENTRE EM CONTATO</button></a>
                     </div>
                 </div>
             </div>

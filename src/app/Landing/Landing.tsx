@@ -1,18 +1,24 @@
 'use client'
 
-//Imports
-import Menu from '@/app/Landing/Menu'
-import Slides from './Slides'
-import Metodo from './Metodo'
-import Depoimentos from './Depoimentos'
-import ComoFunciona from './ComoFunciona'
-import Time from './Time'
-import ComparisonTable from './Comparacao'
-import Agendar from './Agendar'
-import Footer from './Footer'
+// Imports
+import Menu from '@/app/Landing/Menu';
+import Slides from './Slides';
+import Metodo from './Metodo';
+import Depoimentos from './Depoimentos';
+import ComoFunciona from './ComoFunciona';
+import Time from './Time';
+import ComparisonTable from './Comparacao';
+import Agendar from './Agendar';
+import Footer from './Footer';
+import MaisDepoimentos from './MaisDepoimentos';
 
-export default function Landing(){
-    return(
+export default function Landing() {
+    const openWhatsApp = () => {
+        const phoneNumber = "5511999999999"; // Replace with your phone number
+        window.open(`https://wa.me/${phoneNumber}`, '_blank'); // Open WhatsApp chat in a new tab
+    };
+
+    return (
         <div>
             <Menu />
             <Slides />
@@ -21,8 +27,23 @@ export default function Landing(){
             <ComoFunciona />
             <Time />
             <ComparisonTable />
+            <MaisDepoimentos />
             <Agendar />
             <Footer />
+
+            {/* Fixed WhatsApp Button */}
+            <button
+                onClick={openWhatsApp}
+                className="fixed bottom-4 right-4 bg-green-500 text-white rounded-full p-3 shadow-lg hover:bg-green-600 transition duration-200"
+            >
+                <span className="flex items-center justify-center">
+                    <img 
+                        src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+                        alt="WhatsApp" 
+                        className="w-6 h-6"
+                    />
+                </span>
+            </button>
         </div>
-    )
+    );
 }

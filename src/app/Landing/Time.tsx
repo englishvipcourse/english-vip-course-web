@@ -9,7 +9,7 @@ export default function Time() {
         <div className="bg-blue-50 text-[#505050] flex flex-col items-center h-full">
             <div className="flex flex-col items-center font-bold sm:text-6xl text-4xl w-full p-20">
                 <span>Conheça</span>
-                <span className="text-blue-600">Nosso Time</span>
+                <span className="text-gradient">Nosso Time</span>
             </div>
 
             <div className="w-screen flex flex-wrap justify-center gap-28 p-4">

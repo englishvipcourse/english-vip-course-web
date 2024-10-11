@@ -15,8 +15,8 @@ export default function Metodo() {
             <div className="lg:flex lg:flex-row sm:flex sm:flex-col items-center sm:p-28 sm:px-38 p-6 px-6 w-full h-full">
                 <div className="flex flex-col sm:items-start items-center font-bold sm:text-6xl text-4xl w-full">
                     <span>Personalizado,</span>
-                    <span className="text-blue-600">flexível e eficaz</span>
-                </div>
+                    <span className="text-gradient">flexível e eficaz</span>
+                    </div>
 
                 <div className="sm:text-right text-center leading-8">
                     <span className="text-black">Descubra o Diferencial da Nossa Escola: domine o inglês de forma rápida, eficiente e abra portas para oportunidades globais.</span>

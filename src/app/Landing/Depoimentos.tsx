@@ -40,7 +40,7 @@ export default function Depoimentos() {
     return (
         <div className="text-[#505050] flex flex-col gap-4 items-center justify-center p-8">
             <div className="flex flex-col gap-2 items-center sm:text-5xl text-3xl text-center">
-                <p className="font-bold">Transformações <span className="text-blue-600">reais</span></p>
+                <p className="font-bold">Transformações <span className="text-gradient">reais</span></p>
                 <p className="text-base font-medium">Histórias de Sucesso de Nossos Alunos</p>
             </div>
 
