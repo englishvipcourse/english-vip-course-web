@@ -1,11 +1,16 @@
 'use client'
 
-import { useState } from 'react'; // Import useState
+import { useEffect, useState } from 'react'; // Import useState
 import Image from "next/image";
+
+import { auth } from '../firebaseConfig';
+import { signOut } from 'firebase/auth';
+
+import { onAuthStateChanged } from "firebase/auth";
 
 //Icons
 import { CgClose } from "react-icons/cg";
-import { TbMenu2 } from "react-icons/tb";
+import { TbLogout2, TbMenu2 } from "react-icons/tb";
 import { LuDoorOpen } from "react-icons/lu";
 
 //Images
@@ -14,9 +19,30 @@ import Logo from '../../../images/cropped-logo-english.png';
 export default function Landing() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar state
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    useEffect(() => {
+        // Check if user is logged in
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+          if (user) {
+            setIsLoggedIn(true);
+          } else {
+            setIsLoggedIn(false);
+          }
+        });
+
+        return () => unsubscribe();
+      }, []);
+
     // Toggle sidebar visibility
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
+    };
+
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+        } catch (error) {
+        }
     };
 
     return (
@@ -39,13 +65,24 @@ export default function Landing() {
                 </div>
 
                 {/* Regular Menu - Hidden on mobile */}
-                <div className="hidden lg:flex flex-row gap-12 justify-between text-[#222222] text-[14.4px]">
+                <div className="hidden lg:flex flex-row gap-12 items-center justify-between text-[#222222] text-[14.4px]">
                     <a href='#nosso-metodo'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Nosso Método</p></a>
                     <a href='#nosso-time'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Nosso Time</p></a>
                     <a href='#depoimentos'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Depoimentos</p></a>
                     <a href='#perguntas'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Perguntas Frequentes</p></a>
                     <a href='#contato'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Contato</p></a>
-                    <a href='/login'><button className="ml-20 text-[15.5px] flex flex-row gap-1 items-center text-blue-950 font-semibold hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer"><LuDoorOpen /> Login</button></a>
+                    {!isLoggedIn &&<a href='/login'><button className="ml-20 text-[15.5px] flex flex-row gap-1 items-center text-blue-950 font-semibold hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer"><LuDoorOpen /> Login</button></a>}
+                    {isLoggedIn && (
+                        <div className="flex flex-row gap-2 items-center">
+                            <p className='text-black text-xs font-bold bg-blue-500 hover:bg-blue-600 duration-300 ease-in-out transition-all rounded-lg py-2 px-2'>Admin Mode</p>
+                            <button 
+                            onClick={handleLogout}
+                            className="flex flex-row gap-1 items-center text-black text-xs font-bold bg-red-400 hover:bg-red-500 duration-300 ease-in-out transition-all rounded-lg py-2 px-2"
+                            >
+                            <TbLogout2 className='w-4 h-4' /> Sair
+                        </button>
+                        </div>
+                    )}
                 </div>
             </div>
 
@@ -69,7 +106,18 @@ export default function Landing() {
                         <a href='#perguntas'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Perguntas Frequentes</p></a>
                         <a href='#contato'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Contato</p></a>
                         </div>
-                        <a href='/login'><button className="flex text-lg flex-row mt-20 gap-1 items-center text-blue-800 font-semibold hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer"><LuDoorOpen className='w-6 h-6' /> Login</button></a>
+                        {!isLoggedIn &&<a href='/login'><button className="flex text-lg flex-row mt-20 gap-1 items-center text-blue-800 font-semibold hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer"><LuDoorOpen className='w-6 h-6' /> Login</button></a>}
+                        {isLoggedIn && (
+                        <div className="flex flex-col mt-8 gap-2 items-center">
+                            <p className='text-black text-xs font-bold bg-blue-500 hover:bg-blue-600 duration-300 ease-in-out transition-all rounded-lg py-2 px-2'>Admin Mode</p>
+                            <button 
+                            onClick={handleLogout}
+                            className="flex flex-row gap-1 items-center text-black text-xs font-bold bg-red-400 hover:bg-red-500 duration-300 ease-in-out transition-all rounded-lg py-2 px-2"
+                            >
+                            <TbLogout2 className='w-4 h-4' /> Sair
+                        </button>
+                        </div>
+                        )}
                     </div>
                 </div>
             </div>
