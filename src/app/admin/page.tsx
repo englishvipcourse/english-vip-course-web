@@ -49,6 +49,10 @@ const AdminPage: React.FC = () => {
         }
     };
 
+    const handleEditar = async () => {
+        router.push('/');
+        }
+
     const handleDelete = async (id: string) => {
         try {
             await deleteDoc(doc(db, 'schedules', id));
@@ -80,15 +84,23 @@ const AdminPage: React.FC = () => {
             <div className="bg-white p-4 rounded-lg shadow-md w-full h-full overflow-hidden">
                 <div className='flex sm:flex-row flex-col items-center justify-between w-full p-2 mb-6'>
                 <Image src={Logo} alt={""} className='w-[50%] h-[50%] pb-6 sm:hidden inline' />
-                    <div className='flex sm:flex-row justify-between w-full h-full'>
-                        <Image src={Logo} alt={""} className='w-[10%] h-[10%] sm:inline hidden' />
-                        <h1 className="sm:text-3xl text-lg font-bold text-left">Painel de Administrador</h1>
-                        <button 
-                            onClick={handleLogout}
-                            className="w-20 px-3 bg-red-600 flex flex-row items-center gap-2 text-white font-semibold rounded-lg hover:bg-red-700 transition duration-200"
-                        >
-                            <TbLogout2 className='w-6 h-6' /> Sair
-                        </button>
+                    <div className='flex sm:flex-row flex-col items-center justify-between w-full h-full'>
+                        <Image src={Logo} alt={""} className='w-[12%] h-[12%] sm:inline hidden' />
+                        <h1 className="sm:text-3xl text-lg font-bold text-left w-max">Painel de Administrador</h1>
+                        <div className='flex flex-row items-center gap-1'>
+                            <button 
+                                onClick={handleEditar}
+                                className="w-max py-2 px-3 bg-green-600 flex flex-row items-center gap-2 text-white font-semibold rounded-lg hover:bg-green-700 transition duration-200"
+                            >
+                                Editar Página
+                            </button>
+                            <button 
+                                onClick={handleLogout}
+                                className="w-max py-2 px-3 bg-red-600 flex flex-row items-center gap-2 text-white font-semibold rounded-lg hover:bg-red-700 transition duration-200"
+                            >
+                                <TbLogout2 className='w-6 h-6' /> Sair
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div className='w-full h-[75vh] overflow-y-auto p-2 bg-gray-200 rounded-lg flex flex-col items-center justify-start'>

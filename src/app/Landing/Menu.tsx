@@ -4,9 +4,8 @@ import { useEffect, useState } from 'react'; // Import useState
 import Image from "next/image";
 
 import { auth } from '../firebaseConfig';
-import { signOut } from 'firebase/auth';
-
 import { onAuthStateChanged } from "firebase/auth";
+import { signOut } from 'firebase/auth';
 
 //Icons
 import { CgClose } from "react-icons/cg";
