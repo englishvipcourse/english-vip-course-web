@@ -1,9 +1,9 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { auth } from '../firebaseConfig';
-import { signOut } from 'firebase/auth';
+import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
-import toast, {Toaster} from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../firebaseConfig'; // Import your Firestore instance
 import Image from 'next/image';
@@ -23,6 +23,20 @@ const AdminPage: React.FC = () => {
     const [schedules, setSchedules] = useState<Schedule[]>([]);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [scheduleToDelete, setScheduleToDelete] = useState<string | null>(null);
+    const [user, setUser] = useState<any>(null);  // State to store the authenticated user
+
+    useEffect(() => {
+        // Check if the user is authenticated
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            if (!currentUser) {
+                router.push('/login'); // Redirect to login if not authenticated
+            } else {
+                setUser(currentUser); // Set user state if authenticated
+            }
+        });
+
+        return () => unsubscribe(); // Cleanup the listener on unmount
+    }, [router]);
 
     useEffect(() => {
         const fetchSchedules = async () => {
@@ -51,7 +65,7 @@ const AdminPage: React.FC = () => {
 
     const handleEditar = async () => {
         router.push('/');
-        }
+    };
 
     const handleDelete = async (id: string) => {
         try {
@@ -83,7 +97,7 @@ const AdminPage: React.FC = () => {
             <Toaster />
             <div className="bg-white p-4 rounded-lg shadow-md w-full h-full overflow-hidden">
                 <div className='flex sm:flex-row flex-col items-center justify-between w-full p-2 mb-6'>
-                <Image src={Logo} alt={""} className='w-[50%] h-[50%] pb-6 sm:hidden inline' />
+                    <Image src={Logo} alt={""} className='w-[50%] h-[50%] pb-6 sm:hidden inline' />
                     <div className='flex sm:flex-row flex-col items-center justify-between w-full h-full'>
                         <Image src={Logo} alt={""} className='w-[12%] h-[12%] sm:inline hidden' />
                         <h1 className="sm:text-3xl text-lg font-bold text-left w-max">Painel de Administrador</h1>
