@@ -1,11 +1,12 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { auth, db, storage } from '../firebaseConfig'; // Ensure you have storage exported from firebaseConfig
+import { auth, db, storage } from '../firebaseConfig';
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, setDoc, collection, getDocs, deleteDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import toast, {Toaster} from 'react-hot-toast';
- 
+import toast, { Toaster } from 'react-hot-toast';
+import Upload from '../../../images/rb_7025.png';
+
 export default function Metodo() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cards, setCards] = useState<any[]>([]);
@@ -15,15 +16,12 @@ export default function Metodo() {
     description: ''
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
 
   useEffect(() => {
     // Check if user is logged in
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setIsLoggedIn(true);
-      } else {
-        setIsLoggedIn(false);
-      }
+      setIsLoggedIn(!!user);
     });
 
     return () => unsubscribe();
@@ -80,12 +78,10 @@ export default function Metodo() {
 
   const handleCreateCard = async () => {
     if (imageFile) {
-      // Upload image to Firebase Storage
       const imageRef = ref(storage, `icons/${imageFile.name}`);
       try {
         // Upload file
         await uploadBytes(imageRef, imageFile);
-        // Get the download URL
         const imageURL = await getDownloadURL(imageRef);
 
         // Save the new card in Firestore with the image URL
@@ -93,12 +89,12 @@ export default function Metodo() {
         await setDoc(newCardRef, {
           title: newCard.title,
           description: newCard.description,
-          src: imageURL // Use the URL from Firebase Storage
+          src: imageURL
         });
 
-        // Clear input fields
         setNewCard({ src: '', title: '', description: '' });
         setImageFile(null);
+        setIsModalOpen(false); // Close the modal after creating the card
 
         // Fetch updated cards
         const querySnapshot = await getDocs(collection(db, "metodo"));
@@ -112,13 +108,13 @@ export default function Metodo() {
         console.error("Error uploading image or saving card:", error);
       }
     } else {
-        toast.error("Please upload an image before creating the card.");
+      toast.error("Please upload an image before creating the card.");
     }
   };
 
   return (
     <div id="nosso-metodo" className="text-[#505050] sm:p-4 flex flex-col justify-center items-center">
-        <Toaster />
+      <Toaster />
       <div className="lg:flex lg:flex-row sm:flex sm:flex-col items-center sm:p-20 sm:px-38 p-6 px-6 w-full h-full">
         <div className="flex flex-col sm:items-start items-center font-bold sm:text-6xl text-4xl w-full">
           <span>Personalizado,</span>
@@ -131,40 +127,80 @@ export default function Metodo() {
         </div>
       </div>
 
-      {/* Admin Card Creation Form */}
       {isLoggedIn && (
-        <div className="flex flex-col items-center p-8 bg-gray-200 w-fit h-fit rounded-lg">
-          <h3 className="font-bold text-lg mb-4">Create New Card</h3>
-          <input
-            type="text"
-            placeholder="Title"
-            value={newCard.title}
-            onChange={(e) => setNewCard({ ...newCard, title: e.target.value })}
-            className="w-full mb-2 p-2 border border-gray-300 rounded-md"
-          />
-          <textarea
-            placeholder="Description"
-            value={newCard.description}
-            onChange={(e) => setNewCard({ ...newCard, description: e.target.value })}
-            className="w-full mb-2 p-2 border border-gray-300 rounded-md"
-          />
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setImageFile(e.target.files?.[0] || null)}
-            className="mb-2 p-2 border border-gray-300 rounded-md"
-          />
+        <div className="flex flex-col items-center p-2">
           <button
-            onClick={handleCreateCard}
-            className="mt-2 bg-blue-500 hover:bg-blue-700 duration-300 ease-in-out transition-all text-white font-semibold py-2 px-4 rounded-lg"
+            onClick={() => setIsModalOpen(true)} // Open modal
+            className="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg duration-300 transition-all ease-in-out"
           >
-            Create Card
+            Adicionar card novo
           </button>
         </div>
       )}
 
+      {/* Modal for Creating New Card */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg p-8 w-full max-w-lg">
+            <h3 className="font-bold text-lg mb-4">Criar um novo card</h3>
+            <input
+              type="text"
+              placeholder="Título"
+              value={newCard.title}
+              onChange={(e) => setNewCard({ ...newCard, title: e.target.value })}
+              className="w-full mb-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:border-blue-600"
+            />
+            <textarea
+              placeholder="Descrição"
+              value={newCard.description}
+              onChange={(e) => setNewCard({ ...newCard, description: e.target.value })}
+              className="w-full mb-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:border-blue-600"
+            />
+            <div className="grid grid-cols-1 space-y-2 mb-2">
+              <label className="text-sm font-bold text-gray-500 tracking-wide">Adicionar Ícone</label>
+              <div className="flex items-center justify-center w-full">
+                <label className="flex flex-col rounded-lg border-4 border-dashed w-full h-60 p-10 group text-center">
+                  <div className="h-full w-full text-center flex flex-col items-center justify-center">
+                    <div className="flex flex-auto max-h-48 w-2/5 mx-auto -mt-10">
+                      <Image
+                        src={Upload}
+                        alt="Upload Image"
+                        width={144}
+                        height={144}
+                      />
+                    </div>
+                    <p className="pointer-none text-gray-500">
+                      <a href="#" className="text-blue-600 hover:underline duration-300 transition-all ease-in-out">Selecione um arquivo</a> do seu computador
+                    </p>
+                  </div>
+                  <input
+                    type="file"
+                    className="hidden"
+                    onChange={(e) => setImageFile(e.target.files?.[0] || null)}
+                  />
+                </label>
+              </div>
+            </div>
+            <div className="flex justify-end space-x-2">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="bg-gray-300 hover:bg-gray-400 text-black font-semibold py-2 px-4 rounded-lg duration-300 transition-all ease-in-out"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleCreateCard}
+                className="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg duration-300 transition-all ease-in-out"
+              >
+                Criar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Cards Container */}
-      <div className="flex flex-wrap items-start justify-center gap-8 p-8">
+      <div className="flex flex-wrap items-start justify-center gap-8 p-6">
         {cards.map((card) => (
           <div key={card.id} className="flex flex-col items-center w-64 rounded-lg p-4 text-center">
             <Image src={card.src} alt="Imagem" className="mb-4" width={64} height={64} />
@@ -173,7 +209,7 @@ export default function Metodo() {
                 type="text"
                 value={card.title}
                 onChange={(e) => handleTitleChange(card.id, e.target.value)}
-                className="font-bold text-sky-500 mb-2"
+                className="p-2 border border-gray-300 rounded-md font-bold text-sky-500 mb-2 focus:outline-none focus:ring-2 focus:border-blue-600"
               />
             ) : (
               <span className="font-bold text-sky-500">{card.title}</span>
@@ -182,25 +218,26 @@ export default function Metodo() {
               <textarea
                 value={card.description}
                 onChange={(e) => handleDescriptionChange(card.id, e.target.value)}
-                className="text-gray-600 mb-2 p-2 border border-gray-300 rounded-md"
+                className="text-gray-600 mb-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:border-blue-600"
               />
             ) : (
               <span className="text-gray-600">{card.description}</span>
             )}
             {isLoggedIn && (
-                <div className="flex space-x-2">
-                <button
-                  onClick={() => handleSaveCard(card.id, card.title, card.description)}
-                  className="mt-2 bg-green-500 hover:bg-green-700 text-white font-semibold py-1 px-4 rounded-lg"
-                >
-                  Save
-                </button>
+              <div className="flex space-x-2">
                 <button
                   onClick={() => handleDelete(card.id)}
-                  className="mt-2 bg-red-500 hover:bg-red-700 text-white font-semibold py-1 px-4 rounded-lg"
+                  className="mt-2 bg-red-500 hover:bg-red-700 text-white font-semibold py-1 px-4 rounded-lg duration-300 transition-all ease-in-out" 
                 >
-                  Delete
+                  Deletar
                 </button>
+                <button
+                  onClick={() => handleSaveCard(card.id, card.title, card.description)}
+                  className="mt-2 bg-green-500 hover:bg-green-700 text-white font-semibold py-1 px-4 rounded-lg duration-300 transition-all ease-in-out"
+                >
+                  Salvar
+                </button>
+              
               </div>
             )}
           </div>

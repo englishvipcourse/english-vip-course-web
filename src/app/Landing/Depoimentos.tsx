@@ -1,70 +1,279 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
-
-import Depoimento1 from '../../../images/depoimentos/patricia.png';
-import Depoimento2 from '../../../images/depoimentos/pedro.png';
-import Depoimento3 from '../../../images/depoimentos/andre-lukas.png';
-import Depoimento4 from '../../../images/depoimentos/indalecio.png';
-import Depoimento5 from '../../../images/depoimentos/jamille-melo.png';
-
-const testimonials = [
-    { image: Depoimento1, name: "Patrícia", description: "Good morning! I am fine! Estou muito feliz por estar evoluindo na medida do possível rsrs As aulas estão sendo excelentes! A teacher é muito boa e está ajudando muito na nossa evolução." },
-    { image: Depoimento2, name: "Pedro", description: "Meu amigo, que aula massa ontem!!! Fiquei feliz demais com a participação da outra teacher e vê que meu inglês tá destravado rsrsrsrs obrigado por tá me dando a segurança de saber que EU POSSO conversar com outras pessoas em inglês!! Que venham mais aulas e mais aprendizados a cada dia!!!" },
-    { image: Depoimento3, name: "Andre Lukas", description: "Gostaria de mandar essa mensagem para lhe agradecer por tudo. Percebi uma evolução muito grande no meu inglês. Consegui compreender melhor os filmes, músicas e conversas em inglês. Por trazer assuntos atualizados com diversos temas diferentes, fez aumentar meu vocabulário. A metodologia aplicada com exercícios de listening, reading e speaking ao longo da aula, ajudou demais no meu desenvolvimento. Aprendi gramática sem precisar ficar decorando, como é ensinado nesses cursinhos padrões. Sou muito grato. Um excelente curso de inglês. Acredito que foi o melhor que já tive. Super indico!!!! Desejo muito sucesso!!!!" },
-    { image: Depoimento4, name: "Indalecio", description: "2021 marcou minha volta ao estudo do inglês, agora em tempos de pandemia, através de aulas on-line, que foram muito bem assimiladas e integradas na minha rotina. Eu consegui uma rápida adaptação a metodologia empregada pelo professor, que vem conseguindo aprimorar minhas habilidades linguísticas através da transferência de conhecimento, dicas e direcionamento nos estudos. O objetivo de conseguir fluência está mais próxima. Curiosidade: Luan foi indicado a mim por meu filho, que tem fluência no inglês e Luan tem mérito nesta trajetória. Recomendo-o." },
-    { image: Depoimento5, name: "Jamille Melo", description: "Gostaria de te agradecer por ter me preparado tão bem para que eu conseguisse fazer minha Eurotrip, sem grande perrengues. Toda preparação foi essencial para que eu destravasse ao chegar lá e conseguisse me comunicar e avançar ainda mais no inglês. Obrigada pela paciência e por todas as estratégias para conciliar as minhas necessidades de estudos entre assuntos do trabalho e viagem. Vocês são top!!" },
-];
+import { auth, db, storage } from '../firebaseConfig'; // Ensure you have storage exported from firebaseConfig
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, setDoc, collection, getDocs, deleteDoc } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import Upload from '../../../images/rb_7025.png';
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Depoimentos() {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [isMobile, setIsMobile] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [testimonials, setTestimonials] = useState<any[]>([]);
+  const [newTestimonial, setNewTestimonial] = useState({
+    image: '',
+    name: '',
+    description: ''
+  });
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
 
-    // Check if the viewport is mobile
-    const checkViewport = () => {
-        setIsMobile(window.innerWidth <= 768);
+  // Check if the viewport is mobile
+  const checkViewport = () => {
+    setIsMobile(window.innerWidth <= 768);
+  };
+
+  useEffect(() => {
+    checkViewport();
+    window.addEventListener('resize', checkViewport);
+    return () => window.removeEventListener('resize', checkViewport);
+  }, []);
+
+  // Fetch testimonials from Firestore on mount
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      const querySnapshot = await getDocs(collection(db, "depoimentos"));
+      const testimonialsData: any[] = [];
+      querySnapshot.forEach((doc) => {
+        testimonialsData.push({ id: doc.id, ...doc.data() });
+      });
+      setTestimonials(testimonialsData);
     };
 
-    useEffect(() => {
-        checkViewport();
-        window.addEventListener('resize', checkViewport);
-        return () => window.removeEventListener('resize', checkViewport);
-    }, []);
+    fetchTestimonials();
 
-    const handleDotClick = (index: number) => {
-        setCurrentIndex(index);
-    };
+    // Check if the user is logged in
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    });
 
-    // Determine how many testimonials to display
-    const testimonialsToShow = isMobile ? 1 : 3;
+    return () => unsubscribe();
+  }, []);
 
-    return (
-        <div id="depoimentos" className="text-[#505050] flex flex-col gap-4 items-center justify-center p-8">
-            <div className="flex flex-col gap-2 items-center sm:text-5xl text-3xl text-center">
-                <p className="font-bold">Transformações <span className="text-gradient">reais</span></p>
-                <p className="text-base font-medium">Histórias de Sucesso de Nossos Alunos</p>
-            </div>
+  const handleDotClick = (index: number) => {
+    setCurrentIndex(index);
+  };
 
-            <div className="flex flex-col items-center p-8 lg:px-20">
-                <div className="flex gap-4 justify-center">
-                    {testimonials.slice(currentIndex, currentIndex + testimonialsToShow).map((testimonial, index) => (
-                        <div key={index} className="flex flex-col items-center w-full rounded-lg p-4 text-center">
-                            <Image src={testimonial.image} alt={testimonial.name} className="mb-4 w-36 rounded-full" />
-                            <span className="text-gray-600">{testimonial.description}</span>
-                            <span className="font-bold text-sky-500">{testimonial.name}</span>
-                        </div>
-                    ))}
-                </div>
+  // Determine how many testimonials to display
+  const testimonialsToShow = isMobile ? 1 : 3;
 
-                <div className="flex mt-4">
-                    {Array.from({ length: Math.ceil(testimonials.length / testimonialsToShow) }).map((_, index) => (
-                        <button
-                            key={index}
-                            className={`w-10 h-3 mx-1 rounded-xl ${currentIndex === index ? 'bg-blue-600' : 'bg-gray-300'}`}
-                            onClick={() => handleDotClick(index)}
-                        />
-                    ))}
-                </div>
-            </div>
-        </div>
+  // Handle testimonial updates
+  const handleTestimonialChange = (id: string, field: string, value: string) => {
+    const updatedTestimonials = testimonials.map((testimonial) =>
+      testimonial.id === id ? { ...testimonial, [field]: value } : testimonial
     );
+    setTestimonials(updatedTestimonials);
+  };
+
+  // Save edited testimonial to Firestore
+  const handleSaveTestimonial = async (id: string, name: string, description: string, image: string) => {
+    try {
+      const testimonialRef = doc(db, "depoimentos", id);
+      await setDoc(testimonialRef, { name, description, image }, { merge: true });
+      toast.success("Depoimento salvo!");
+    } catch (error) {
+      console.error("Error updating testimonial:", error);
+    }
+  };
+
+  // Delete testimonial from Firestore
+  const handleDeleteTestimonial = async (id: string) => {
+    try {
+      const testimonialRef = doc(db, "depoimentos", id);
+      await deleteDoc(testimonialRef);
+      toast.success("Depoimento deletado!");
+      setTestimonials(testimonials.filter(testimonial => testimonial.id !== id));
+    } catch (error) {
+      console.error("Error deleting testimonial:", error);
+    }
+  };
+
+  // Handle new testimonial creation
+  const handleCreateTestimonial = async () => {
+    if (imageFile) {
+      const imageRef = ref(storage, `depoimentos/${imageFile.name}`);
+      try {
+        // Upload file
+        await uploadBytes(imageRef, imageFile);
+        // Get the download URL
+        const imageURL = await getDownloadURL(imageRef);
+
+        // Save new testimonial to Firestore
+        const newTestimonialRef = doc(collection(db, "depoimentos"));
+        await setDoc(newTestimonialRef, {
+          name: newTestimonial.name,
+          description: newTestimonial.description,
+          image: imageURL // Save image URL
+        });
+
+        // Clear form
+        setNewTestimonial({ image: '', name: '', description: '' });
+        setImageFile(null);
+
+        // Fetch updated testimonials
+        const querySnapshot = await getDocs(collection(db, "depoimentos"));
+        const testimonialsData: any[] = [];
+        querySnapshot.forEach((doc) => {
+          testimonialsData.push({ id: doc.id, ...doc.data() });
+        });
+        setTestimonials(testimonialsData);
+
+        toast.success("Novo depoimento criado!");
+        setIsModalOpen(false); // Close modal after creating testimonial
+      } catch (error) {
+        toast.error("Erro ao subir imagem");
+      }
+    } else {
+      console.log("Please upload an image before creating the testimonial.");
+    }
+  };
+
+  return (
+    <div id="depoimentos" className="text-[#505050] flex flex-col gap-4 items-center justify-center p-8">
+      <Toaster />
+
+      <div className="flex flex-col gap-2 items-center sm:text-5xl text-3xl text-center">
+        <p className="font-bold">Transformações <span className="text-gradient">reais</span></p>
+        <p className="text-base font-medium">Histórias de Sucesso de Nossos Alunos</p>
+      </div>
+
+      <div className="flex flex-col items-center p-8 lg:px-20">
+        <div className="flex gap-4 justify-center">
+          {testimonials.slice(currentIndex, currentIndex + testimonialsToShow).map((testimonial, index) => (
+            <div key={index} className="flex flex-col items-center w-full rounded-lg p-4 text-center">
+              <Image
+                src={testimonial.image}
+                alt={testimonial.name}
+                className="mb-4 w-36 rounded-full"
+                width={144}
+                height={144}
+              />
+              {isLoggedIn ? (
+                <>
+                  <textarea
+                    value={testimonial.description}
+                    onChange={(e) => handleTestimonialChange(testimonial.id, "description", e.target.value)}
+                    className="text-gray-600 mb-2 p-2 border border-gray-300 rounded-md"
+                  />
+                  <input
+                    type="text"
+                    value={testimonial.name}
+                    onChange={(e) => handleTestimonialChange(testimonial.id, "name", e.target.value)}
+                    className="font-bold text-sky-500 mb-2"
+                  />
+                  <div className="flex space-x-2">
+                  <button
+                      onClick={() => handleDeleteTestimonial(testimonial.id)}
+                      className="mt-2 bg-red-500 hover:bg-red-700 text-white font-semibold py-1 px-4 rounded-lg duration-300 transition-all ease-in-out"
+                    >
+                      Deletar
+                    </button>
+                    <button
+                      onClick={() => handleSaveTestimonial(testimonial.id, testimonial.name, testimonial.description, testimonial.image)}
+                      className="mt-2 bg-green-500 hover:bg-green-700 text-white font-semibold py-1 px-4 rounded-lg duration-300 transition-all ease-in-out"
+                    >
+                      Salvar
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <span className="text-gray-600">{testimonial.description}</span>
+                  <span className="font-bold text-sky-500">{testimonial.name}</span>
+                </>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="flex mt-4">
+          {Array.from({ length: Math.ceil(testimonials.length / testimonialsToShow) }).map((_, index) => (
+            <button
+              key={index}
+              className={`w-10 h-3 mx-1 rounded-xl ${currentIndex === index ? 'bg-blue-600' : 'bg-gray-300'}`}
+              onClick={() => handleDotClick(index)}
+            />
+          ))}
+        </div>
+      </div>
+
+      {isLoggedIn && (
+        <div className="flex flex-col items-center">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg duration-300 transition-all ease-in-out"
+          >
+            Adicionar depoimento
+          </button>
+        </div>
+      )}
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg p-8 w-full max-w-lg m-4">
+            <h3 className="font-bold text-lg mb-4">Adicionar Novo Depoimento</h3>
+            <div className="grid grid-cols-1 space-y-2 mb-3">
+              <label className="text-sm font-bold text-gray-500 tracking-wide">Adicionar Imagem</label>
+              <div className="flex items-center justify-center w-full">
+                <label className="flex flex-col rounded-lg border-4 border-dashed w-full h-60 p-10 group text-center">
+                  <div className="h-full w-full text-center flex flex-col items-center justify-center">
+                    <div className="flex flex-auto max-h-48 w-2/5 mx-auto -mt-10">
+                      <Image
+                        src={Upload}
+                        alt="Upload Image"
+                        width={144}
+                        height={144}
+                      />
+                    </div>
+                    <p className="pointer-none text-gray-500">
+                      <a href="#" className="text-blue-600 hover:underline duration-300 transition-all ease-in-out">Selecione um arquivo</a> do seu computador
+                    </p>
+                  </div>
+                  <input
+                    type="file"
+                    className="hidden"
+                    onChange={(e: any) => setImageFile(e.target.files[0])}
+                  />
+                </label>
+              </div>
+            </div>
+            <input
+              type="text"
+              placeholder="Nome"
+              value={newTestimonial.name}
+              onChange={(e) => setNewTestimonial({ ...newTestimonial, name: e.target.value })}
+              className="mb-2 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:border-blue-600"
+            />
+            <textarea
+              placeholder="Descrição"
+              value={newTestimonial.description}
+              onChange={(e) => setNewTestimonial({ ...newTestimonial, description: e.target.value })}
+              className="mb-2 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:border-blue-600"
+            />
+            <div className="flex justify-end space-x-2">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="bg-gray-300 hover:bg-gray-400 text-black font-semibold py-2 px-4 rounded-lg duration-300 transition-all ease-in-out"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleCreateTestimonial}
+                className="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg duration-300 transition-all ease-in-out"
+              >
+                Adicionar Depoimento
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }

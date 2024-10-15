@@ -12,6 +12,8 @@ import Agendar from './Agendar';
 import Footer from './Footer';
 import MaisDepoimentos from './MaisDepoimentos';
 import Image from 'next/image';
+import FAQ from './FAQ';
+import Instagram from './Instagram';
 
 export default function Landing() {
     const openWhatsApp = () => {
@@ -30,6 +32,8 @@ export default function Landing() {
             <ComparisonTable />
             <MaisDepoimentos />
             <Agendar />
+            <FAQ />
+            <Instagram />
             <Footer />
 
             {/* Fixed WhatsApp Button */}

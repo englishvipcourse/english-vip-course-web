@@ -9,11 +9,11 @@ import { IoIosArrowForward } from "react-icons/io";
 
 const ComparisonTable: React.FC = () => {
     return (
-        <div className="text-[#505050] flex flex-col items-center p-12 gap-10">
+        <div className="text-[#505050] flex flex-col items-center p-12 gap-10 mt-12">
             {/* Title */}
             <div className="flex flex-col items-center text-center font-bold sm:text-6xl text-4xl w-full">
                 <span>Veja como</span>
-                <span className="text-gradient">Nossa Escola Se Destaca</span>
+                <span className="text-gradient leading-tight">Nossa Escola Se Destaca</span>
             </div>
 
             {/* Table */}
@@ -110,8 +110,8 @@ const ComparisonTable: React.FC = () => {
             </div>
 
             <div className="w-screen h-full sm:gap-2 gap-10 flex sm:flex-row flex-col items-start justify-between sm:py-28 py-16 px-16 mt-10 bg-blue-900 text-white">
-                <p className="text-xl md:text-3xl font-semibold sm:leading-[45px] leading-[35px] sm:text-left text-center">
-                    A nossa escola online se destaca por oferecer um ensino de <span className="bg-red-600">inglês altamente personalizado</span> e adaptado às necessidades e interesses específicos de cada aluno.
+                <p className="text-xl md:text-3xl font-semibold sm:leading-[50px] leading-[40px] sm:text-left text-center">
+                    A nossa escola online se destaca por oferecer um ensino de <span className="bg-red-600 leading-normal">inglês altamente personalizado</span> e adaptado às necessidades e interesses específicos de cada aluno.
                 </p>
                 <p className="leading-loose text-sm md:text-base sm:text-right text-center sm:px-20 p-0">
                     Nossa escola de inglês online é estruturada para atender às necessidades específicas de cada aluno, oferecendo um método personalizado, flexível e eficaz que transforma o aprendizado do inglês em uma experiência agradável e recompensadora. Estamos comprometidos em ajudar nossos alunos a alcançar seus objetivos com confiança e segurança.

@@ -4,6 +4,8 @@ import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../firebaseConfig';
 import toast, {Toaster} from 'react-hot-toast';
+import Image from 'next/image';
+import Upload from '../../../../images/rb_7025.png';
 
 // Pre-set colors with hover variants
 const presetColors = {
@@ -108,12 +110,12 @@ const SlideUploadModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
     >
       <Toaster />
       <div
-        className="bg-white p-6 rounded-lg w-full h-[70vh] max-w-4xl m-6 sm:overflow-y-hidden overflow-y-auto"
+        className="bg-white p-6 rounded-lg w-full h-[90vh] max-w-4xl m-6 sm:overflow-y-hidden overflow-y-auto"
         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
       >
         {/* Modal Header and Tab Navigation */}
         <div className="flex sm:flex-row flex-col items-center sm:gap-0 gap-3 justify-between mb-4">
-          <h2 className="sm:text-2xl w-full text-xl font-bold">Panel Management</h2>
+          <h2 className="sm:text-2xl w-full text-xl font-bold">Gerenciar Painel</h2>
           <div className="flex flex-row gap-2 sm:justify-end justify-center w-full">
             <button
               onClick={() => setActiveTab('upload')}
@@ -125,7 +127,7 @@ const SlideUploadModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
               onClick={() => setActiveTab('active')}
               className={`sm:px-4 px-1 sm:py-2 py-1 sm:w-fit w-full text-sm font-semibold rounded-lg ${activeTab === 'active' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
             >
-              Active Slides
+              Slides ativos
             </button>
           </div>
         </div>
@@ -135,33 +137,33 @@ const SlideUploadModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
           <div className='flex flex-col gap-4'>
             <div className='flex sm:flex-row flex-col sm:items-center items-start gap-4 w-full'>
               <div className="mb-4">
-                <label className="block text-sm font-medium mb-2">Slide Title</label>
+                <label className="block text-sm font-medium mb-2">Título do slide</label>
                 <input
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md"
-                  placeholder="Enter slide title"
+                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:border-blue-600"
+                  placeholder="Título do slide"
                 />
               </div>
 
               <div className="mb-4">
-                <label className="block text-sm font-medium mb-2">Highlighted Text</label>
+                <label className="block text-sm font-medium mb-2">Texto destacado</label>
                 <input
                   type="text"
                   value={highlightedText}
                   onChange={(e) => setHighlightedText(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md"
-                  placeholder="Enter text to highlight"
+                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:border-blue-600"
+                  placeholder="Texto que deve ser destacado"
                 />
               </div>
 
               <div className="mb-4">
-              <label className="block text-sm font-medium mb-2">Highlight Color</label>
+              <label className="block text-sm font-medium mb-2">Cor de destaque</label>
               <select
                 value={highlightColor}
                 onChange={(e) => setHighlightColor(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md"
+                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:border-blue-600"
               >
                 {Object.keys(presetColors).map((color) => (
                   <option key={color} value={color}>
@@ -174,36 +176,52 @@ const SlideUploadModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
 
             <div className='flex sm:flex-row flex-col sm:items-center items-start gap-2'>
               <div className="mb-4">
-                <label className="block text-sm font-medium mb-2">Button Title</label>
+                <label className="block text-sm font-medium mb-2">Título do botão</label>
                 <input
                   type="text"
                   value={buttonTitle}
                   onChange={(e) => setButtonTitle(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md"
-                  placeholder="Enter button title"
+                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:border-blue-600"
+                  placeholder="Título do botão"
                 />
               </div>
 
               <div className="mb-4">
-                <label className="block text-sm font-medium mb-2">Button Link</label>
+                <label className="block text-sm font-medium mb-2">Link do botão</label>
                 <input
                   type="url"
                   value={buttonLink}
                   onChange={(e) => setButtonLink(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md"
-                  placeholder="Enter button link"
+                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:border-blue-600"
+                  placeholder="Link do botão"
                 />
               </div>
             </div>
 
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-2">Upload Image</label>
-              <input
-                type="file"
-                onChange={handleFileChange}
-                accept="image/*"
-                className="w-full p-2 border border-gray-300 rounded-md"
-              />
+            <div className="grid grid-cols-1 space-y-2">
+              <label className="text-sm font-bold text-gray-500 tracking-wide">Adicionar Imagem de Fundo</label>
+              <div className="flex items-center justify-center w-full">
+                <label className="flex flex-col rounded-lg border-4 border-dashed w-full h-26 p-10 group text-center">
+                  <div className="h-full w-full text-center flex flex-row items-center justify-center">
+                    <div className="flex flex-auto max-h-48 w-2/5 mx-auto -mt-10">
+                      <Image
+                        src={Upload}
+                        alt="Upload Image"
+                        width={144}
+                        height={144}
+                      />
+                    </div>
+                    <p className="pointer-none text-gray-500">
+                      <a href="#" className="text-blue-600 hover:underline duration-300 transition-all ease-in-out">Selecione um arquivo</a> do seu computador
+                    </p>
+                  </div>
+                  <input
+                    type="file"
+                    className="hidden"
+                    onChange={handleFileChange}
+                  />
+                </label>
+              </div>
             </div>
 
             <div className="flex flex-row gap-2 justify-end items-center">
@@ -211,14 +229,14 @@ const SlideUploadModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
                 onClick={onClose}
                 className="px-4 py-2 bg-gray-300 hover:bg-gray-400 duration-300 ease-in-out transition-all text-black rounded-lg font-semibold"
               >
-                Cancel
+                Cancelar
               </button>
               <button
                 onClick={handleSubmit}
                 disabled={uploading}
                 className={`px-4 py-2 bg-green-600 hover:bg-green-800 duration-300 ease-in-out transition-all text-white font-semibold rounded-lg ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
-                {uploading ? 'Uploading...' : 'Save'}
+                {uploading ? 'Uploading...' : 'Salvar'}
               </button>
             </div>
           </div>
@@ -236,13 +254,13 @@ const SlideUploadModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
                       onClick={() => handleDeleteSlide(slide.id)}
                       className="text-white font-semibold bg-red-600 hover:bg-red-700 duration-300 ease-in-out transition-all rounded-lg px-3 py-2"
                     >
-                      Delete
+                      Deletar
                     </button>
                   </li>
                 ))}
               </ul>
             ) : (
-              <p>No slides available.</p>
+              <p>Sem slides disponíveis.</p>
             )}
           </div>
         )}

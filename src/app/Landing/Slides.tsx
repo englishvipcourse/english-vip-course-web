@@ -143,9 +143,9 @@ export default function Slides() {
         <div className="absolute top-5 right-5">
           <button
             onClick={() => setIsModalOpen(true)}
-            className="px-6 py-2 text-white bg-green-500 hover:bg-green-700 rounded-lg transition-all duration-300 ease-in-out"
+            className="px-6 py-2 text-white bg-blue-600 hover:bg-blue-700 font-semibold rounded-lg transition-all duration-300 ease-in-out"
           >
-            Edit Panel
+            Editar Panel
           </button>
         </div>
       )}
