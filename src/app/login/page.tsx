@@ -8,6 +8,8 @@ import Imagem from '../../../images/login-photo.jpg';
 import Logo from '../../../images/cropped-logo-english.png';
 import { useRouter } from 'next/navigation';
 import { IoIosArrowBack } from "react-icons/io";
+import Lottie from 'react-lottie-player'; // Import LottiePlayer
+import lottieAnimation from '../../../images/logo-animated.json'; // Import your Lottie animation JSON file
 
 const Login = () => {
     const router = useRouter();
@@ -15,7 +17,8 @@ const Login = () => {
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
     const [rememberMe, setRememberMe] = useState<boolean>(false);
-    const [isLoading, setIsLoading] = useState<boolean>(false); // Add loading state
+    const [isLoading, setIsLoading] = useState<boolean>(false); // Loading for form submission
+    const [showAnimation, setShowAnimation] = useState<boolean>(false); // To show animation after successful login
 
     useEffect(() => {
         const storedEmail = localStorage.getItem('email');
@@ -32,17 +35,30 @@ const Login = () => {
 
         try {
             await signInWithEmailAndPassword(auth, email, password);
-            toast.success('Bem-vindo!');
             
             if (rememberMe) {
                 localStorage.setItem('email', email);
             } else {
                 localStorage.removeItem('email');
             }
-            router.push('/admin'); // Redirect to admin page after successful login
+
+            // Show animation on successful login
+            setShowAnimation(true);
+
+            // Wait for 2 seconds and then redirect to the admin page
+            setTimeout(() => {
+                router.push('/admin');
+            }, 2000);
         } catch (err) {
             const error = err as Error;
-            toast.error("Erro ao logar");
+            const errorCode = error.message.split(' ')[1]; // Get the Firebase error code (e.g., 'auth/invalid-credential')
+            
+            // Handle different error codes
+            if (errorCode === 'auth/invalid-credential') {
+              toast.error('Credenciais inválidas. Verifique seu email ou senha.');
+            } else {
+              toast.error(`Erro ao logar: ${error.message}`);
+            }          
         } finally {
             setIsLoading(false); // Stop loading after login is done
         }
@@ -63,12 +79,14 @@ const Login = () => {
     };
 
     return (
-        <div className="flex items-center justify-center w-screen h-screen bg-gray-100 text-black">
+        <div className="flex items-center justify-center w-screen h-screen bg-gray-100 text-black relative">
             <Toaster />
             <a href='/' className='absolute top-4 left-4 cursor-pointer'>
                 <IoIosArrowBack className='w-8 h-8 text-blue-600 hover:text-blue-700 duration-300 ease-in-out transition-all' />
             </a>
-            <div className="w-full h-full flex flex-col items-center justify-center p-8 rounded-lg sm:mb-0 mb-20">
+
+            {/* Form and logo */}
+            <div className={`w-full h-full flex flex-col items-center justify-center p-8 rounded-lg sm:mb-0 mb-20 ${showAnimation ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}>
                 <Image src={Logo} alt="Logo" className='m-8 w-64' />
                 <form className='w-[85%]' onSubmit={handleLogin}>
                     <div className="mb-4">
@@ -104,7 +122,7 @@ const Login = () => {
                     <button 
                         type="submit" 
                         className={`w-full py-3 bg-blue-600 text-white font-semibold rounded-lg transition duration-200 flex justify-center items-center ${isLoading ? 'cursor-not-allowed opacity-75' : 'hover:bg-blue-700'}`}
-                        disabled={isLoading} // Disable button while loading
+                        disabled={isLoading || showAnimation} // Disable button during loading or when animation is showing
                     >
                         {isLoading ? (
                             <svg className="animate-spin h-5 w-5 mr-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -126,9 +144,23 @@ const Login = () => {
                     </p>
                 </form>
             </div>
+
+            {/* Background image */}
             <div className='w-full h-full sm:flex hidden'>
                 <Image src={Imagem} alt="Background" className='w-full h-full object-cover' />
             </div>
+
+            {/* Full-screen Lottie animation after successful login */}
+            {showAnimation && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-white">
+                    <Lottie
+                        loop={false}
+                        animationData={lottieAnimation}
+                        play
+                        style={{ width: 1000, height: 1000 }}
+                    />
+                </div>
+            )}
         </div>
     );
 };

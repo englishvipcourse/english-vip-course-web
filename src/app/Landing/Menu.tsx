@@ -56,21 +56,21 @@ export default function Landing() {
                     <button onClick={toggleSidebar} className="text-[#222222] focus:outline-none">
                         {/* Conditionally render the icons */}
                         {isSidebarOpen ? (
-                            <CgClose className="w-8 h-8 hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer" />
+                            <CgClose className="w-8 h-8 hover:text-azulClaro transition-all ease-in-out duration-200 cursor-pointer" />
                         ) : (
-                            <TbMenu2 className="w-8 h-8 hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer" />
+                            <TbMenu2 className="w-8 h-8 hover:text-azulClaro transition-all ease-in-out duration-200 cursor-pointer" />
                         )}
                     </button>
                 </div>
 
                 {/* Regular Menu - Hidden on mobile */}
                 <div className="hidden lg:flex flex-row gap-12 items-center justify-between text-[#222222] text-[14.4px]">
-                    <a href='#nosso-metodo'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Nosso Método</p></a>
-                    <a href='#nosso-time'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Nosso Time</p></a>
-                    <a href='#depoimentos'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Depoimentos</p></a>
-                    <a href='#perguntas'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Perguntas Frequentes</p></a>
-                    <a href='#contato'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Contato</p></a>
-                    {!isLoggedIn &&<a href='/login'><button className="ml-20 text-[15.5px] flex flex-row gap-1 items-center text-blue-950 font-semibold hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer"><LuDoorOpen /> Login</button></a>}
+                    <a href='#nosso-metodo'><p className="hover:text-azulClaro transition-all ease-in-out duration-200 cursor-pointer">Nosso Método</p></a>
+                    <a href='#nosso-time'><p className="hover:text-azulClaro transition-all ease-in-out duration-200 cursor-pointer">Nosso Time</p></a>
+                    <a href='#depoimentos'><p className="hover:text-azulClaro transition-all ease-in-out duration-200 cursor-pointer">Depoimentos</p></a>
+                    <a href='#perguntas'><p className="hover:text-azulClaro transition-all ease-in-out duration-200 cursor-pointer">Perguntas Frequentes</p></a>
+                    <a href='#contato'><p className="hover:text-azulClaro transition-all ease-in-out duration-200 cursor-pointer">Contato</p></a>
+                    {!isLoggedIn &&<a href='/login'><button className="ml-20 text-[15.5px] flex flex-row gap-1 items-center text-blue-950 font-semibold hover:text-azulClaro transition-all ease-in-out duration-200 cursor-pointer"><LuDoorOpen /> Login</button></a>}
                     {isLoggedIn && (
                         <div className="flex flex-row gap-2 items-center">
                             <p className='text-black text-xs font-bold bg-blue-500 hover:bg-blue-600 duration-300 ease-in-out transition-all rounded-lg py-2 px-2'>Admin Mode</p>
@@ -90,22 +90,22 @@ export default function Landing() {
                 <div className="p-5">
                     <div className='flex flex-row items-center justify-between w-full'>
                     <button onClick={toggleSidebar} className="text-[#222222] mb-4">
-                        <CgClose className="w-8 h-8 hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer" />
+                        <CgClose className="w-8 h-8 hover:text-azulClaro transition-all ease-in-out duration-200 cursor-pointer" />
                     </button>
                     <Image src={Logo} alt={""} />
                     <button onClick={toggleSidebar} className="text-white mb-4">
-                        <CgClose className="w-8 h-8 hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer" />
+                        <CgClose className="w-8 h-8 hover:text-azulClaro] transition-all ease-in-out duration-200 cursor-pointer" />
                     </button>
                     </div>
                     <div className='flex flex-col items-center justify-between h-full p-6 mt-6 text-[#222222]'>
                         <div className='flex flex-col items-center gap-10'>
-                        <a href='#nosso-metodo'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Nosso Método</p></a>
-                        <a href='#nosso-time'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Nosso Time</p></a>
-                        <a href='#depoimentos'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Depoimentos</p></a>
-                        <a href='#perguntas'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Perguntas Frequentes</p></a>
-                        <a href='#contato'><p className="hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer">Contato</p></a>
+                        <a href='#nosso-metodo'><p className="hover:text-azulClaro transition-all ease-in-out duration-200 cursor-pointer">Nosso Método</p></a>
+                        <a href='#nosso-time'><p className="hover:text-azulClaro transition-all ease-in-out duration-200 cursor-pointer">Nosso Time</p></a>
+                        <a href='#depoimentos'><p className="hover:text-azulClaro transition-all ease-in-out duration-200 cursor-pointer">Depoimentos</p></a>
+                        <a href='#perguntas'><p className="hover:text-azulClaro transition-all ease-in-out duration-200 cursor-pointer">Perguntas Frequentes</p></a>
+                        <a href='#contato'><p className="hover:text-azulClaro transition-all ease-in-out duration-200 cursor-pointer">Contato</p></a>
                         </div>
-                        {!isLoggedIn &&<a href='/login'><button className="flex text-lg flex-row mt-20 gap-1 items-center text-blue-800 font-semibold hover:text-[#0693e3] transition-all ease-in-out duration-200 cursor-pointer"><LuDoorOpen className='w-6 h-6' /> Login</button></a>}
+                        {!isLoggedIn &&<a href='/login'><button className="flex text-lg flex-row mt-20 gap-1 items-center text-blue-800 font-semibold hover:text-azulClaro transition-all ease-in-out duration-200 cursor-pointer"><LuDoorOpen className='w-6 h-6' /> Login</button></a>}
                         {isLoggedIn && (
                         <div className="flex flex-col mt-8 gap-2 items-center">
                             <p className='text-black text-xs font-bold bg-blue-500 hover:bg-blue-600 duration-300 ease-in-out transition-all rounded-lg py-2 px-2'>Admin Mode</p>
