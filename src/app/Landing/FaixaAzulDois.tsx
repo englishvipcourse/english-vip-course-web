@@ -3,18 +3,10 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../firebaseConfig';
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
-interface FaixaAzulDoisProps {
-  initialText: string;
-  initialHighlightText: string;
-}
-
-export default function FaixaAzulDois({
-  initialText,
-  initialHighlightText,
-}: FaixaAzulDoisProps) {
+export default function FaixaAzulDois() {
   const db = getFirestore(); // Initialize Firestore
-  const [leftText, setLeftText] = useState<string>(initialText || '');
-  const [highlightText, setHighlightText] = useState<string>(initialHighlightText || '');
+  const [leftText, setLeftText] = useState<string>(''); // Set default or empty string
+  const [highlightText, setHighlightText] = useState<string>(''); // Set default or empty string
   const [secondText, setSecondText] = useState<string>(''); // New state for second text
   const [highlightStart, setHighlightStart] = useState<number>(0);
   const [highlightEnd, setHighlightEnd] = useState<number>(0);
@@ -32,7 +24,7 @@ export default function FaixaAzulDois({
   // Fetch content from Firestore
   useEffect(() => {
     const fetchContent = async () => {
-      const docRef = doc(db, "contents", "content_datas"); // Assuming the document ID is "content_data"
+      const docRef = doc(db, "contents", "content_datas"); // Assuming the document ID is "content_datas"
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         const data = docSnap.data();

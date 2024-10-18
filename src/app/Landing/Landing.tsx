@@ -30,10 +30,10 @@ export default function Landing() {
             <Metodo />
             <Depoimentos />
             <ComoFunciona />
-            <FaixaAzul initialText={''} initialButtonText={''} buttonLink={''} initialHighlightText={''} />
+            <FaixaAzul />
             <Time />
             <ComparisonTable />
-            <FaixaAzulDois initialText={''} initialButtonText={''} buttonLink={''} initialHighlightText={''} />
+            <FaixaAzulDois />
             <MaisDepoimentos />
             <Agendar />
             <FAQ />

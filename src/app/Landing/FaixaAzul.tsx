@@ -3,23 +3,12 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../firebaseConfig';
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
-interface FaixaAzulProps {
-  initialText: string;
-  initialButtonText: string;
-  buttonLink: string;
-  initialHighlightText: string;
-}
-
-export default function FaixaAzul({
-  initialText,
-  initialButtonText,
-  buttonLink,
-  initialHighlightText,
-}: FaixaAzulProps) {
+export default function FaixaAzul() {
   const db = getFirestore(); // Initialize Firestore
-  const [leftText, setLeftText] = useState<string>(initialText || '');
-  const [highlightText, setHighlightText] = useState<string>(initialHighlightText || '');
-  const [buttonText, setButtonText] = useState<string>(initialButtonText || '');
+  const [leftText, setLeftText] = useState<string>(''); // Set default or empty string
+  const [highlightText, setHighlightText] = useState<string>(''); // Set default or empty string
+  const [buttonText, setButtonText] = useState<string>(''); // Set default or empty string
+  const [buttonLink, setButtonLink] = useState<string>(''); // Set default or empty string
   const [highlightStart, setHighlightStart] = useState<number>(0);
   const [highlightEnd, setHighlightEnd] = useState<number>(0);
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -43,6 +32,7 @@ export default function FaixaAzul({
         setLeftText(data.leftText);
         setHighlightText(data.highlightText);
         setButtonText(data.buttonText);
+        setButtonLink(data.buttonLink);
       }
     };
     fetchContent();
@@ -85,14 +75,12 @@ export default function FaixaAzul({
 
   // Save the changes to Firestore
   const saveChangesToFirestore = async () => {
-    const validButtonLink = buttonLink || '';
-  
     const docRef = doc(db, "content", "content_data");
     await setDoc(docRef, {
       leftText,
       highlightText,
       buttonText,
-      buttonLink: validButtonLink // Ensures no undefined value is passed to Firestore
+      buttonLink
     });
   };
 
