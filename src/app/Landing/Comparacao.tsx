@@ -167,46 +167,6 @@ const ComparisonTable: React.FC = () => {
           </tbody>
         </table>
       </div>
-
-      <div className="w-screen h-full sm:gap-2 gap-10 flex sm:flex-row flex-col items-start justify-between sm:py-28 py-16 px-16 mt-10 bg-blue-900 text-white">
-        {/* Editable top text */}
-        <p className="text-xl md:text-3xl font-semibold sm:leading-[50px] leading-[40px] sm:text-left text-center">
-        {isLoggedIn ? (
-            <textarea
-                value={textContent.topText}
-                onChange={(e) => handleEditText('topText', e.target.value)}
-                className="bg-transparent border-2 p-4 border-gray-200 rounded-md w-80 h-80 text-xl md:text-3xl font-semibold sm:leading-[50px] leading-[40px] sm:text-left text-center"
-                rows={6} // Adjust rows for multi-line input
-            />
-            ) : (
-            textContent.topText
-            )}
-        </p>
-
-        {/* Editable bottom text */}
-        <p className="leading-loose text-sm md:text-base sm:text-right text-center sm:px-20 p-0">
-          {isLoggedIn ? (
-            <textarea
-              value={textContent.bottomText}
-              onChange={(e) => handleEditText('bottomText', e.target.value)}
-              className="bg-transparent border-2 p-4 border-gray-200 rounded-md w-80 h-80"
-              rows={4}
-            />
-          ) : (
-            textContent.bottomText
-          )}
-        </p>
-
-        {/* Save Button */}
-        {isLoggedIn && (
-          <button
-            onClick={saveTextContent}
-            className="bg-green-500 hover:bg-green-600 text-white duration-300 ease-in-out transition-all py-2 px-4 rounded-lg mt-4"
-          >
-            Salvar
-          </button>
-        )}
-      </div>
     </div>
   );
 };

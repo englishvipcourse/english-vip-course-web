@@ -85,3 +85,10 @@ body {
 .text-gradient {
   @apply bg-clip-text text-transparent animate-gradient; /* Ensure this class uses the animation */
 }
+
+#background-logo{
+  background-image: url("../../images/TRELLO-BACKGROUND.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

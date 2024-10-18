@@ -14,6 +14,8 @@ import MaisDepoimentos from './MaisDepoimentos';
 import Image from 'next/image';
 import FAQ from './FAQ';
 import Instagram from './Instagram';
+import FaixaAzul from './FaixaAzul';
+import FaixaAzulDois from './FaixaAzulDois';
 
 export default function Landing() {
     const openWhatsApp = () => {
@@ -28,8 +30,10 @@ export default function Landing() {
             <Metodo />
             <Depoimentos />
             <ComoFunciona />
+            <FaixaAzul initialText={''} initialButtonText={''} buttonLink={''} initialHighlightText={''} />
             <Time />
             <ComparisonTable />
+            <FaixaAzulDois initialText={''} initialButtonText={''} buttonLink={''} initialHighlightText={''} />
             <MaisDepoimentos />
             <Agendar />
             <FAQ />

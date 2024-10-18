@@ -165,8 +165,8 @@ export default function Metodo() {
                       <Image
                         src={Upload}
                         alt="Upload Image"
-                        width={144}
-                        height={144}
+                        width={500}
+                        height={500}
                       />
                     </div>
                     <p className="pointer-none text-gray-500">

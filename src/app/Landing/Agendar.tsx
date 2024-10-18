@@ -78,9 +78,9 @@ export default function Agendar() {
   };
 
   return (
-    <div>
+    <div id="contato" >
       <Toaster /> {/* Add Toaster for toast notifications */}
-      <div id="contato" className="w-full sm:gap-36 gap-4 flex sm:flex-row flex-col items-center justify-between p-12 py-20 px-20 mt-20 bg-blue-900 text-white">
+      <div id="background-logo" className="w-full sm:gap-36 gap-4 flex sm:flex-row flex-col items-center justify-between p-12 py-20 px-20 mt-20 bg-blue-900 text-white">
         <div className="flex flex-col items-start">
           <p className="sm:text-6xl text-4xl font-semibold">
             Agende sua aula <span className="bg-red-600 leading-normal">experimental</span>

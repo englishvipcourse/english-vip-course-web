@@ -134,12 +134,13 @@ const MaisDepoimentos: React.FC = () => {
                                 referrerPolicy="strict-origin-when-cross-origin"
                                 allowFullScreen
                             />
+                            {isLoggedIn &&
                             <button
                                 onClick={() => handleDeleteVideo(index)}
                                 className="absolute top-2 right-2 text-white bg-red-500 hover:bg-red-700 rounded-full p-2"
                             >
                                 🗑️
-                            </button>
+                            </button>}
                         </div>
                     ))}
                 </div>
