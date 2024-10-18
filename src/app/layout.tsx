@@ -10,6 +10,18 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "English Vip Course",
   description: "Seu novo jeito de aprender inglês!",
+  robots: {
+    index: true, // Ensures the page is indexed
+    follow: true, // Ensures links on the page are followed
+  },
+  openGraph: {
+    title: "English Vip Course",
+    description: "Seu novo jeito de aprender inglês!",
+    url: "https://www.englishcousevip.com", // Replace with your website URL
+    siteName: "English Vip Course",
+    locale: "pt_BR",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
