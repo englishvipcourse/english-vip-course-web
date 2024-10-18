@@ -203,7 +203,7 @@ export default function Metodo() {
       <div className="flex flex-wrap items-start justify-center gap-8 p-6">
         {cards.map((card) => (
           <div key={card.id} className="flex flex-col items-center w-64 rounded-lg p-4 text-center">
-            <Image src={card.src} alt="Imagem" className="mb-4" width={64} height={64} />
+            <img src={card.src} alt="Imagem" className="mb-4" width={64} height={64} />
             {isLoggedIn ? (
               <input
                 type="text"
