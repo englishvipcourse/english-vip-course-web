@@ -47,6 +47,7 @@ export default function Footer() {
                     <TbMailFilled />
                     <p>contato@englishvipcourse.com</p>
                 </div>
+                <p><strong>CNPJ:</strong> 52.969.046/0001-17</p>
             </div>
             {/* Social Media Icons */}
             <div className="flex sm:justify-start justify-center space-x-4 mt-4">

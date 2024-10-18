@@ -91,7 +91,7 @@ export default function Slides() {
             <Image
               src={slide.image}
               alt={`Slide ${index + 1}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover "
               width={1000}
               height={1000}
               priority
@@ -119,13 +119,17 @@ export default function Slides() {
                     </React.Fragment>
                   ))}
                 </h2>
-                <a href={slide.buttonLink}>
-                  <button
-                    className={`px-6 py-2 text-base ${presetColors[slide.highlightColor as HighlightColor]?.normal} ${presetColors[slide.highlightColor as HighlightColor]?.hover} text-white rounded-3xl transition-all duration-300 ease-in-out`}
-                  >
-                    {slide.buttonLabel}
-                  </button>
-                </a>
+
+                {/* Only render the button if buttonLabel exists */}
+                {slide.buttonLabel && slide.buttonLink && (
+                  <a href={slide.buttonLink}>
+                    <button
+                      className={`px-6 py-2 text-base ${presetColors[slide.highlightColor as HighlightColor]?.normal} ${presetColors[slide.highlightColor as HighlightColor]?.hover} text-white rounded-3xl transition-all duration-300 ease-in-out`}
+                    >
+                      {slide.buttonLabel}
+                    </button>
+                  </a>
+                )}
               </div>
             </div>
           </div>

@@ -1,19 +1,15 @@
-import { useState, useEffect } from 'react';
-import { db } from '../../firebaseConfig';
-import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import React, { useState, useEffect } from 'react';
+import { db, storage } from '../../firebaseConfig'; // Adjust based on your actual Firebase setup
+import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '../../firebaseConfig';
-import toast, {Toaster} from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import Image from 'next/image';
 import Upload from '../../../../images/rb_7025.png';
-
-// Pre-set colors with hover variants
 const presetColors = {
-  blue: { normal: 'bg-blue-500', hover: 'hover:bg-blue-700' },
-  yellow: { normal: 'bg-yellow-500', hover: 'hover:bg-yellow-700' },
-  red: { normal: 'bg-red-500', hover: 'hover:bg-red-700' },
-  black: { normal: 'bg-black', hover: 'hover:bg-gray-800' },
-  green: { normal: 'bg-green-500', hover: 'hover:bg-green-700' }
+  blue: '#4f8df7',
+  green: '#38a169',
+  red: '#e53e3e',
+  yellow: '#d69e2e',
 };
 
 const SlideUploadModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
@@ -26,6 +22,7 @@ const SlideUploadModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
   const [uploading, setUploading] = useState(false);
   const [slides, setSlides] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState<'upload' | 'active'>('upload'); // State for active tab
+  const [useButton, setUseButton] = useState(false); // State for showing/hiding button fields
 
   const clearFields = () => {
     setTitle('');
@@ -34,6 +31,7 @@ const SlideUploadModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
     setButtonTitle('');
     setButtonLink('');
     setImage(null);
+    setUseButton(false); // Reset button toggle
   };
 
   useEffect(() => {
@@ -57,7 +55,7 @@ const SlideUploadModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
   };
 
   const handleSubmit = async () => {
-    if (image && title && buttonTitle && buttonLink) {
+    if (image && title) {
       setUploading(true);
       try {
         // Upload image to Firebase Storage
@@ -67,14 +65,20 @@ const SlideUploadModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
 
         // Add slide data to Firestore
         const slidesCollection = collection(db, "slides");
-        await addDoc(slidesCollection, {
+        const slideData: any = {
           image: imageURL,
           text: title,
-          highlightedText: highlightedText,  // Store the highlighted text
-          highlightColor: highlightColor,  // Store the highlight color
-          buttonLabel: buttonTitle,
-          buttonLink: buttonLink,
-        });
+          highlightedText: highlightedText, // Store the highlighted text
+          highlightColor: highlightColor, // Store the highlight color
+        };
+
+        // Include button data if the checkbox is checked
+        if (useButton && buttonTitle && buttonLink) {
+          slideData.buttonLabel = buttonTitle;
+          slideData.buttonLink = buttonLink;
+        }
+
+        await addDoc(slidesCollection, slideData);
 
         toast.success("Slide uploaded successfully!");
         onClose(); // Close the modal after success
@@ -110,7 +114,7 @@ const SlideUploadModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
     >
       <Toaster />
       <div
-        className="bg-white p-6 rounded-lg w-full h-[90vh] max-w-4xl m-6 sm:overflow-y-hidden overflow-y-auto"
+        className="bg-white p-6 rounded-lg w-full h-[90vh] max-w-4xl m-6 overflow-y-auto"
         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
       >
         {/* Modal Header and Tab Navigation */}
@@ -159,44 +163,62 @@ const SlideUploadModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
               </div>
 
               <div className="mb-4">
-              <label className="block text-sm font-medium mb-2">Cor de destaque</label>
-              <select
-                value={highlightColor}
-                onChange={(e) => setHighlightColor(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:border-blue-600"
-              >
-                {Object.keys(presetColors).map((color) => (
-                  <option key={color} value={color}>
-                    {color.charAt(0).toUpperCase() + color.slice(1)}
-                  </option>
-                ))}
-              </select>
-            </div>
-            </div>
-
-            <div className='flex sm:flex-row flex-col sm:items-center items-start gap-2'>
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-2">Título do botão</label>
-                <input
-                  type="text"
-                  value={buttonTitle}
-                  onChange={(e) => setButtonTitle(e.target.value)}
+                <label className="block text-sm font-medium mb-2">Cor de destaque</label>
+                <select
+                  value={highlightColor}
+                  onChange={(e) => setHighlightColor(e.target.value)}
                   className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:border-blue-600"
-                  placeholder="Título do botão"
-                />
-              </div>
-
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-2">Link do botão</label>
-                <input
-                  type="url"
-                  value={buttonLink}
-                  onChange={(e) => setButtonLink(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:border-blue-600"
-                  placeholder="Link do botão"
-                />
+                >
+                  {Object.keys(presetColors).map((color) => (
+                    <option key={color} value={color}>
+                      {color.charAt(0).toUpperCase() + color.slice(1)}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
+
+            <div className="mb-4 flex flex-row items-start w-full gap-8">
+              <div>
+                <label className="block text-sm font-medium mb-2">Adicionar um botão?</label>
+                <input
+                  type="checkbox"
+                  checked={useButton}
+                  onChange={(e) => setUseButton(e.target.checked)}
+                  className="mr-2"
+                />
+                <span>Sim</span>
+              </div>
+
+              {/* Button Fields */}
+              {useButton && (
+                <div className='flex sm:flex-row flex-col sm:items-center items-start gap-2'>
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium mb-2">Título do botão</label>
+                    <input
+                      type="text"
+                      value={buttonTitle}
+                      onChange={(e) => setButtonTitle(e.target.value)}
+                      className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:border-blue-600"
+                      placeholder="Título do botão"
+                    />
+                  </div>
+
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium mb-2">Link do botão</label>
+                    <input
+                      type="url"
+                      value={buttonLink}
+                      onChange={(e) => setButtonLink(e.target.value)}
+                      className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:border-blue-600"
+                      placeholder="Link do botão"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+
+           
 
             <div className="grid grid-cols-1 space-y-2">
               <label className="text-sm font-bold text-gray-500 tracking-wide">Adicionar Imagem de Fundo</label>
@@ -243,24 +265,44 @@ const SlideUploadModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
         )}
 
         {activeTab === 'active' && (
-          <div className="mt-6">
-            <h3 className="text-lg font-semibold mb-2">Active Slides</h3>
-            {slides.length > 0 ? (
-              <ul>
-                {slides.map((slide) => (
-                  <li key={slide.id} className="flex justify-between items-center mb-2">
-                    <span>{slide.text}</span>
-                    <button
-                      onClick={() => handleDeleteSlide(slide.id)}
-                      className="text-white font-semibold bg-red-600 hover:bg-red-700 duration-300 ease-in-out transition-all rounded-lg px-3 py-2"
-                    >
-                      Deletar
-                    </button>
-                  </li>
-                ))}
-              </ul>
+          <div className='flex flex-col gap-4'>
+            <h3 className="font-semibold text-xl">Slides Ativos</h3>
+            {slides.length === 0 ? (
+              <p className="text-gray-500">Nenhum slide ativo encontrado.</p>
             ) : (
-              <p>Sem slides disponíveis.</p>
+              <div className="flex flex-wrap flex-row items-start justify-start w-full h-full gap-4 rounded-lg">
+                {slides.map((slide) => (
+                  <div
+                    key={slide.id}
+                    className="border w-full h-full rounded-lg shadow-lg relative"
+                  >
+                    <img
+                      src={slide.image}
+                      alt={slide.text}
+                      className="w-full h-20 object-cover"
+                    />
+                    <div className="p-4 flex flex-col items-start gap-4">
+                      <h4 className="text-xl font-semibold">{slide.text}</h4>
+                      {slide.buttonLabel && (
+                      <div className="">
+                        <a
+                          href={slide.buttonLink}
+                          className="text-white bg-blue-600 py-2 px-4 rounded-md"
+                        >
+                          {slide.buttonLabel}
+                        </a>
+                      </div>
+                    )}
+                    </div>
+                    <div
+                      className="absolute top-2 right-2 text-white cursor-pointer bg-red-600 p-2 rounded-lg"
+                      onClick={() => handleDeleteSlide(slide.id)}
+                    >
+                      <span>Excluir</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
             )}
           </div>
         )}

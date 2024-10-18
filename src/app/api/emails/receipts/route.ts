@@ -11,15 +11,15 @@ export async function POST(request: Request) {
 
     // Send the email via Resend API to the school
     const school = await resend.emails.send({
-      from: 'contato@fluencylab.me',
-      to: 'matheusmb77@outlook.com', // Your email
+      from: 'contato@englishvipcourse.com',
+      to: 'englishvipcourse@gmail.com', // Your email
       subject: `${name} agendou uma aula`,
       react: React.createElement(WaitlistEmail, { name, number, mail }), // Pass the form data to the email template
     });
 
     // Send the email via Resend API to the student that filled the form
     const student = await resend.emails.send({
-      from: 'contato@fluencylab.me',
+      from: 'contato@englishvipcourse.com',
       to: mail, // Your email
       subject: 'English Vip Course - Aula Agendada',
       react: React.createElement(Student, { name }), // Pass the form data to the email template

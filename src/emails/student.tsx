@@ -52,7 +52,7 @@ import {
           <Section>
             Nossas redes sociais:
             <Column>
-              <Link href="https://www.instagram.com/fluency.lab">
+              <Link href="https://www.instagram.com/englishvipcourse">
                 <Img
                   src={`https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/150px-Instagram_logo_2022.svg.png`}
                   width="32"

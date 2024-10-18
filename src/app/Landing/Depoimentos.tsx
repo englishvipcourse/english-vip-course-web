@@ -15,7 +15,8 @@ export default function Depoimentos() {
   const [newTestimonial, setNewTestimonial] = useState({
     image: '',
     name: '',
-    description: ''
+    description: '',
+    profession: ''
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
@@ -72,10 +73,10 @@ export default function Depoimentos() {
   };
 
   // Save edited testimonial to Firestore
-  const handleSaveTestimonial = async (id: string, name: string, description: string, image: string) => {
+  const handleSaveTestimonial = async (id: string, name: string, description: string, image: string, profession: string) => {
     try {
       const testimonialRef = doc(db, "depoimentos", id);
-      await setDoc(testimonialRef, { name, description, image }, { merge: true });
+      await setDoc(testimonialRef, { name, description, image, profession }, { merge: true });
       toast.success("Depoimento salvo!");
     } catch (error) {
       console.error("Error updating testimonial:", error);
@@ -113,7 +114,7 @@ export default function Depoimentos() {
         });
 
         // Clear form
-        setNewTestimonial({ image: '', name: '', description: '' });
+        setNewTestimonial({ image: '', name: '', description: '', profession: '' });
         setImageFile(null);
 
         // Fetch updated testimonials
@@ -156,6 +157,7 @@ export default function Depoimentos() {
               />
               {isLoggedIn ? (
                 <>
+                  <div className="flex flex-col items-center justify-center gap-2">
                   <textarea
                     value={testimonial.description}
                     onChange={(e) => handleTestimonialChange(testimonial.id, "description", e.target.value)}
@@ -167,6 +169,14 @@ export default function Depoimentos() {
                     onChange={(e) => handleTestimonialChange(testimonial.id, "name", e.target.value)}
                     className="font-bold text-sky-500 mb-2"
                   />
+                  <input
+                    type="text"
+                    value={testimonial.profession}
+                    onChange={(e) => handleTestimonialChange(testimonial.id, "profession", e.target.value)}
+                    className="italic text-gray-500 mb-2"
+                    placeholder="Profissão"
+                  />
+                  </div>
                   <div className="flex space-x-2">
                   <button
                       onClick={() => handleDeleteTestimonial(testimonial.id)}
@@ -175,7 +185,7 @@ export default function Depoimentos() {
                       Deletar
                     </button>
                     <button
-                      onClick={() => handleSaveTestimonial(testimonial.id, testimonial.name, testimonial.description, testimonial.image)}
+                      onClick={() => handleSaveTestimonial(testimonial.id, testimonial.name, testimonial.description, testimonial.image, testimonial.profession)}
                       className="mt-2 bg-green-500 hover:bg-green-700 text-white font-semibold py-1 px-4 rounded-lg duration-300 transition-all ease-in-out"
                     >
                       Salvar
@@ -186,6 +196,7 @@ export default function Depoimentos() {
                 <>
                   <span className="text-gray-600">{testimonial.description}</span>
                   <span className="font-bold text-sky-500">{testimonial.name}</span>
+                  <div className="text-gray-500">{testimonial.profession}</div>
                 </>
               )}
             </div>
@@ -249,6 +260,13 @@ export default function Depoimentos() {
               placeholder="Nome"
               value={newTestimonial.name}
               onChange={(e) => setNewTestimonial({ ...newTestimonial, name: e.target.value })}
+              className="mb-2 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:border-blue-600"
+            />
+            <input
+              type="text"
+              placeholder="Profissão"
+              value={newTestimonial.profession}
+              onChange={(e) => setNewTestimonial({ ...newTestimonial, profession: e.target.value })}
               className="mb-2 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:border-blue-600"
             />
             <textarea
