@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Poppins } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react"
 
 const poppins = Poppins({
   subsets: ["latin"], // Ensure this is an array
@@ -31,6 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Analytics/>
       <body
         className={poppins.className}
       >
