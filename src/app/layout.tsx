@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "English Vip Course",
     description: "Seu novo jeito de aprender inglês!",
-    url: "https://www.englishcousevip.com", // Replace with your website URL
+    url: "https://www.englishvipcourse.com", // Replace with your website URL
     siteName: "English Vip Course",
     locale: "pt_BR",
     type: "website",
