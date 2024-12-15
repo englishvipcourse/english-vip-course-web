@@ -10,17 +10,19 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "English Vip Course",
-  description: "Seu novo jeito de aprender inglês!",
+  title: "Aulas de Inglês Online Personalizadas para Viagens e Trabalho | Escola de Inglês VIP",
+  description:
+    "Descubra como nossas aulas de inglês online personalizadas podem acelerar sua fluência para viagens internacionais e o mercado de trabalho. Resultados rápidos com professores ao vivo!",
   robots: {
     index: true, // Ensures the page is indexed
     follow: true, // Ensures links on the page are followed
   },
   openGraph: {
-    title: "English Vip Course",
-    description: "Seu novo jeito de aprender inglês!",
-    url: "https://www.englishvipcourse.com", // Replace with your website URL
-    siteName: "English Vip Course",
+    title: "Aulas de Inglês Online Personalizadas para Viagens e Trabalho | Escola de Inglês VIP",
+    description:
+      "Descubra como nossas aulas de inglês online personalizadas podem acelerar sua fluência para viagens internacionais e o mercado de trabalho. Resultados rápidos com professores ao vivo!",
+    url: "englishvipcourse.com", // Replace with your website URL
+    siteName: "Escola de Inglês VIP",
     locale: "pt_BR",
     type: "website",
   },
