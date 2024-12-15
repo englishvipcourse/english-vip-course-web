@@ -35,6 +35,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <title>Aulas de Inglês Online Personalizadas para Viagens e Trabalho | Escola de Inglês VIP</title>
+        <meta name="description" content="Descubra como nossas aulas de inglês online personalizadas podem acelerar sua fluência para viagens internacionais e o mercado de trabalho. Resultados rápidos com professores ao vivo!" />
+        <meta name="robots" content="index, follow" />
+        
+        <meta property="og:title" content="Aulas de Inglês Online Personalizadas para Viagens e Trabalho | Escola de Inglês VIP" />
+        <meta property="og:description" content="Descubra como nossas aulas de inglês online personalizadas podem acelerar sua fluência para viagens internacionais e o mercado de trabalho. Resultados rápidos com professores ao vivo!" />
+        <meta property="og:url" content="https://englishvipcourse.com" />
+        <meta property="og:site_name" content="Escola de Inglês VIP" />
+        <meta property="og:locale" content="pt_BR" />
+        <meta property="og:type" content="website" />
+      </head>
+
       <Analytics/>
       <SpeedInsights />
       <body
